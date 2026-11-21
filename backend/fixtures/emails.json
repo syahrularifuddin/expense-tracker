@@ -1,0 +1,1540 @@
+[
+ {
+  "id": "bca.co.id-00",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Notifikasi Transaksi Debit BCA",
+  "body": "Yth. Bapak/Ibu,\n\nBerikut informasi transaksi kartu debit BCA Anda:\nTanggal Transaksi : 01/10/2026 07:05:09\nMerchant : KOPI KENANGAN SUDIRMAN\nJumlah : Rp 28.000,00\nStatus : Berhasil\n\nTerima kasih telah menggunakan layanan BCA.",
+  "received_at": "2026-10-01T00:06:09Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 2800000,
+   "type": "debit",
+   "merchant": "KOPI KENANGAN SUDIRMAN",
+   "occurred_at": "2026-10-01T00:05:09Z"
+  }
+ },
+ {
+  "id": "bca.co.id-01",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Transfer Dana Berhasil",
+  "body": "Yth. Bapak/Ibu,\n\nTransfer dana dari rekening Anda berhasil.\nTanggal : 5 Okt 2026 10:22:20\nPenerima : SITI AMINAH\nNominal : Rp 1.500.000,00\nBerita : -\n\nSalam,\nBCA",
+  "received_at": "2026-10-05T03:23:20Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 150000000,
+   "type": "debit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-10-05T03:22:20Z"
+  }
+ },
+ {
+  "id": "bca.co.id-02",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Dana Masuk ke Rekening BCA",
+  "body": "Yth. Bapak/Ibu,\n\nRekening Anda telah menerima dana.\nTanggal : 9 Okt 2026 13:39:31\nPengirim : PT MAJU JAYA ABADI\nNominal : Rp 12.500,50\n\nSalam,\nBCA",
+  "received_at": "2026-10-09T06:40:31Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 1250050,
+   "type": "credit",
+   "merchant": "PT MAJU JAYA ABADI",
+   "occurred_at": "2026-10-09T06:39:31Z"
+  }
+ },
+ {
+  "id": "bca.co.id-03",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Notifikasi Transaksi Debit BCA",
+  "body": "Yth. Bapak/Ibu,\n\nBerikut informasi transaksi kartu debit BCA Anda:\nTanggal Transaksi : 13/10/2026 16:56:42\nMerchant : Indomaret Kemang\nJumlah : Rp 45.500,00\nStatus : Berhasil\n\nTerima kasih telah menggunakan layanan BCA.",
+  "received_at": "2026-10-13T09:57:42Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 4550000,
+   "type": "debit",
+   "merchant": "Indomaret Kemang",
+   "occurred_at": "2026-10-13T09:56:42Z"
+  }
+ },
+ {
+  "id": "bca.co.id-04",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Transfer Dana Berhasil",
+  "body": "Yth. Bapak/Ibu,\n\nTransfer dana dari rekening Anda berhasil.\nTanggal : 17 Okt 2026 20:13:53\nPenerima : AGUS PRASETYO\nNominal : Rp 250.000,00\nBerita : -\n\nSalam,\nBCA",
+  "received_at": "2026-10-17T13:14:53Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 25000000,
+   "type": "debit",
+   "merchant": "AGUS PRASETYO",
+   "occurred_at": "2026-10-17T13:13:53Z"
+  }
+ },
+ {
+  "id": "bca.co.id-05",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Dana Masuk ke Rekening BCA",
+  "body": "Yth. Bapak/Ibu,\n\nRekening Anda telah menerima dana.\nTanggal : 21 Okt 2026 23:31:04\nPengirim : CV. SUMBER REJEKI\nNominal : Rp 15.000,00\n\nSalam,\nBCA",
+  "received_at": "2026-10-21T16:32:04Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 1500000,
+   "type": "credit",
+   "merchant": "CV. SUMBER REJEKI",
+   "occurred_at": "2026-10-21T16:31:04Z"
+  }
+ },
+ {
+  "id": "bca.co.id-06",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Notifikasi Transaksi Debit BCA",
+  "body": "Yth. Bapak/Ibu,\n\nBerikut informasi transaksi kartu debit BCA Anda:\nTanggal Transaksi : 26/10/2026 02:48:15\nMerchant : Alfamart Jl. Sudirman\nJumlah : Rp 7.500.000,00\nStatus : Berhasil\n\nTerima kasih telah menggunakan layanan BCA.",
+  "received_at": "2026-10-25T19:49:15Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 750000000,
+   "type": "debit",
+   "merchant": "Alfamart Jl. Sudirman",
+   "occurred_at": "2026-10-25T19:48:15Z"
+  }
+ },
+ {
+  "id": "bca.co.id-07",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Transfer Dana Berhasil",
+  "body": "Yth. Bapak/Ibu,\n\nTransfer dana dari rekening Anda berhasil.\nTanggal : 30 Okt 2026 06:05:26\nPenerima : SITI AMINAH\nNominal : Rp 32.000,00\nBerita : -\n\nSalam,\nBCA",
+  "received_at": "2026-10-29T23:06:26Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 3200000,
+   "type": "debit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-10-29T23:05:26Z"
+  }
+ },
+ {
+  "id": "bca.co.id-08",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Dana Masuk ke Rekening BCA",
+  "body": "Yth. Bapak/Ibu,\n\nRekening Anda telah menerima dana.\nTanggal : 3 Nov 2026 09:22:37\nPengirim : PT MAJU JAYA ABADI\nNominal : Rp 99.999,00\n\nSalam,\nBCA",
+  "received_at": "2026-11-03T02:23:37Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 9999900,
+   "type": "credit",
+   "merchant": "PT MAJU JAYA ABADI",
+   "occurred_at": "2026-11-03T02:22:37Z"
+  }
+ },
+ {
+  "id": "bca.co.id-09",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Notifikasi Transaksi Debit BCA",
+  "body": "Yth. Bapak/Ibu,\n\nBerikut informasi transaksi kartu debit BCA Anda:\nTanggal Transaksi : 07/11/2026 12:39:48\nMerchant : Pertamina 34.123.05\nJumlah : Rp 125.000,00\nStatus : Berhasil\n\nTerima kasih telah menggunakan layanan BCA.",
+  "received_at": "2026-11-07T05:40:48Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 12500000,
+   "type": "debit",
+   "merchant": "Pertamina 34.123.05",
+   "occurred_at": "2026-11-07T05:39:48Z"
+  }
+ },
+ {
+  "id": "bca.co.id-10",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Transfer Dana Berhasil",
+  "body": "Yth. Bapak/Ibu,\n\nTransfer dana dari rekening Anda berhasil.\nTanggal : 11 Nov 2026 15:56:59\nPenerima : AGUS PRASETYO\nNominal : Rp 5.000,00\nBerita : -\n\nSalam,\nBCA",
+  "received_at": "2026-11-11T08:57:59Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 500000,
+   "type": "debit",
+   "merchant": "AGUS PRASETYO",
+   "occurred_at": "2026-11-11T08:56:59Z"
+  }
+ },
+ {
+  "id": "bca.co.id-11",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Dana Masuk ke Rekening BCA",
+  "body": "Yth. Bapak/Ibu,\n\nRekening Anda telah menerima dana.\nTanggal : 15 Nov 2026 19:14:10\nPengirim : CV. SUMBER REJEKI\nNominal : Rp 678.500,75\n\nSalam,\nBCA",
+  "received_at": "2026-11-15T12:15:10Z",
+  "expect": {
+   "provider": "bca",
+   "amount_minor": 67850075,
+   "type": "credit",
+   "merchant": "CV. SUMBER REJEKI",
+   "occurred_at": "2026-11-15T12:14:10Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-00",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Hai RINA,\nPembayaran kamu berhasil!\n\nPenerima\nTokopedia\nTanggal\n1 Okt 2026\nJam\n08:05:09 WIB\nNominal Transaksi\nRp 1.500.000,00\nNo. Referensi\n702611210000123\n\nTerima kasih telah menggunakan Livin' by Mandiri.",
+  "received_at": "2026-10-01T01:06:09Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 150000000,
+   "type": "debit",
+   "merchant": "Tokopedia",
+   "occurred_at": "2026-10-01T01:05:09Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-01",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Transfer Berhasil",
+  "body": "Hai RINA,\nTransfer kamu berhasil!\n\nPenerima\nPT MAJU JAYA ABADI\nBank BCA - ****1234\nTanggal\n5 Okt 2026\nJam\n11:22:20 WIB\nNominal Transaksi\nRp 12.500,50\nBiaya Transaksi\nRp 0,00\n",
+  "received_at": "2026-10-05T04:23:20Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 1250050,
+   "type": "debit",
+   "merchant": "PT MAJU JAYA ABADI",
+   "occurred_at": "2026-10-05T04:22:20Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-02",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Dana Masuk",
+  "body": "Hai RINA,\nAda dana masuk ke rekening kamu.\n\nPengirim\nDEWI LESTARI\nTanggal\n9 Okt 2026\nJam\n14:39:31 WIB\nNominal Transaksi\nRp 45.500,00\n",
+  "received_at": "2026-10-09T07:40:31Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 4550000,
+   "type": "credit",
+   "merchant": "DEWI LESTARI",
+   "occurred_at": "2026-10-09T07:39:31Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-03",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Hai RINA,\nPembayaran kamu berhasil!\n\nPenerima\nMcDonald's Sarinah\nTanggal\n13 Okt 2026\nJam\n17:56:42 WIB\nNominal Transaksi\nRp 250.000,00\nNo. Referensi\n702611210000123\n\nTerima kasih telah menggunakan Livin' by Mandiri.",
+  "received_at": "2026-10-13T10:57:42Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 25000000,
+   "type": "debit",
+   "merchant": "McDonald's Sarinah",
+   "occurred_at": "2026-10-13T10:56:42Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-04",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Transfer Berhasil",
+  "body": "Hai RINA,\nTransfer kamu berhasil!\n\nPenerima\nCV. SUMBER REJEKI\nBank BCA - ****1234\nTanggal\n17 Okt 2026\nJam\n21:13:53 WIB\nNominal Transaksi\nRp 15.000,00\nBiaya Transaksi\nRp 0,00\n",
+  "received_at": "2026-10-17T14:14:53Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 1500000,
+   "type": "debit",
+   "merchant": "CV. SUMBER REJEKI",
+   "occurred_at": "2026-10-17T14:13:53Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-05",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Dana Masuk",
+  "body": "Hai RINA,\nAda dana masuk ke rekening kamu.\n\nPengirim\nBUDI SANTOSO\nTanggal\n22 Okt 2026\nJam\n00:31:04 WIB\nNominal Transaksi\nRp 7.500.000,00\n",
+  "received_at": "2026-10-21T17:32:04Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 750000000,
+   "type": "credit",
+   "merchant": "BUDI SANTOSO",
+   "occurred_at": "2026-10-21T17:31:04Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-06",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Hai RINA,\nPembayaran kamu berhasil!\n\nPenerima\nNetflix\nTanggal\n26 Okt 2026\nJam\n03:48:15 WIB\nNominal Transaksi\nRp 32.000,00\nNo. Referensi\n702611210000123\n\nTerima kasih telah menggunakan Livin' by Mandiri.",
+  "received_at": "2026-10-25T20:49:15Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 3200000,
+   "type": "debit",
+   "merchant": "Netflix",
+   "occurred_at": "2026-10-25T20:48:15Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-07",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Transfer Berhasil",
+  "body": "Hai RINA,\nTransfer kamu berhasil!\n\nPenerima\nPT MAJU JAYA ABADI\nBank BCA - ****1234\nTanggal\n30 Okt 2026\nJam\n07:05:26 WIB\nNominal Transaksi\nRp 99.999,00\nBiaya Transaksi\nRp 0,00\n",
+  "received_at": "2026-10-30T00:06:26Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 9999900,
+   "type": "debit",
+   "merchant": "PT MAJU JAYA ABADI",
+   "occurred_at": "2026-10-30T00:05:26Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-08",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Dana Masuk",
+  "body": "Hai RINA,\nAda dana masuk ke rekening kamu.\n\nPengirim\nDEWI LESTARI\nTanggal\n3 Nov 2026\nJam\n10:22:37 WIB\nNominal Transaksi\nRp 125.000,00\n",
+  "received_at": "2026-11-03T03:23:37Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 12500000,
+   "type": "credit",
+   "merchant": "DEWI LESTARI",
+   "occurred_at": "2026-11-03T03:22:37Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-09",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Hai RINA,\nPembayaran kamu berhasil!\n\nPenerima\nWarung Padang Sederhana\nTanggal\n7 Nov 2026\nJam\n13:39:48 WIB\nNominal Transaksi\nRp 5.000,00\nNo. Referensi\n702611210000123\n\nTerima kasih telah menggunakan Livin' by Mandiri.",
+  "received_at": "2026-11-07T06:40:48Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 500000,
+   "type": "debit",
+   "merchant": "Warung Padang Sederhana",
+   "occurred_at": "2026-11-07T06:39:48Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-10",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Transfer Berhasil",
+  "body": "Hai RINA,\nTransfer kamu berhasil!\n\nPenerima\nCV. SUMBER REJEKI\nBank BCA - ****1234\nTanggal\n11 Nov 2026\nJam\n16:56:59 WIB\nNominal Transaksi\nRp 678.500,75\nBiaya Transaksi\nRp 0,00\n",
+  "received_at": "2026-11-11T09:57:59Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 67850075,
+   "type": "debit",
+   "merchant": "CV. SUMBER REJEKI",
+   "occurred_at": "2026-11-11T09:56:59Z"
+  }
+ },
+ {
+  "id": "bankmandiri.co.id-11",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Dana Masuk",
+  "body": "Hai RINA,\nAda dana masuk ke rekening kamu.\n\nPengirim\nBUDI SANTOSO\nTanggal\n15 Nov 2026\nJam\n20:14:10 WIB\nNominal Transaksi\nRp 28.000,00\n",
+  "received_at": "2026-11-15T13:15:10Z",
+  "expect": {
+   "provider": "mandiri",
+   "amount_minor": 2800000,
+   "type": "credit",
+   "merchant": "BUDI SANTOSO",
+   "occurred_at": "2026-11-15T13:14:10Z"
+  }
+ },
+ {
+  "id": "bri.co.id-00",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Transaksi BRImo Berhasil",
+  "body": "Transaksi BRImo Berhasil\n\nTanggal: 1 Oktober 2026, 09:05:09 WIB\nJenis Transaksi: Pembayaran QRIS\nTujuan: Grab\nNominal: Rp12.500,50\nBiaya Admin: Rp0\nTotal: Rp12.500,50\n",
+  "received_at": "2026-10-01T02:06:09Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 1250050,
+   "type": "debit",
+   "merchant": "Grab",
+   "occurred_at": "2026-10-01T02:05:09Z"
+  }
+ },
+ {
+  "id": "bri.co.id-01",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Transaksi BRImo Berhasil",
+  "body": "Transaksi BRImo Berhasil\n\nTanggal: 5 Oktober 2026, 12:22:20 WIB\nJenis Transaksi: Transfer Antar Bank\nTujuan: DEWI LESTARI\nNominal: Rp45.500\nBiaya Admin: Rp2.500\nTotal: Rp48.000\n",
+  "received_at": "2026-10-05T05:23:20Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 4800000,
+   "type": "debit",
+   "merchant": "DEWI LESTARI",
+   "occurred_at": "2026-10-05T05:22:20Z"
+  }
+ },
+ {
+  "id": "bri.co.id-02",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Dana Masuk ke Rekening BRI",
+  "body": "Dana Masuk\n\nTanggal: 9 Oktober 2026, 15:39:31 WIB\nSumber: AGUS PRASETYO\nNominal: Rp250.000\nKeterangan: Transfer masuk\n",
+  "received_at": "2026-10-09T08:40:31Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 25000000,
+   "type": "credit",
+   "merchant": "AGUS PRASETYO",
+   "occurred_at": "2026-10-09T08:39:31Z"
+  }
+ },
+ {
+  "id": "bri.co.id-03",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Transaksi BRImo Berhasil",
+  "body": "Transaksi BRImo Berhasil\n\nTanggal: 13 Oktober 2026, 18:56:42 WIB\nJenis Transaksi: Pembayaran QRIS\nTujuan: PT. PLN (Persero)\nNominal: Rp15.000\nBiaya Admin: Rp0\nTotal: Rp15.000\n",
+  "received_at": "2026-10-13T11:57:42Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 1500000,
+   "type": "debit",
+   "merchant": "PT. PLN (Persero)",
+   "occurred_at": "2026-10-13T11:56:42Z"
+  }
+ },
+ {
+  "id": "bri.co.id-04",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Transaksi BRImo Berhasil",
+  "body": "Transaksi BRImo Berhasil\n\nTanggal: 17 Oktober 2026, 22:13:53 WIB\nJenis Transaksi: Transfer Antar Bank\nTujuan: BUDI SANTOSO\nNominal: Rp7.500.000\nBiaya Admin: Rp2.500\nTotal: Rp7.502.500\n",
+  "received_at": "2026-10-17T15:14:53Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 750250000,
+   "type": "debit",
+   "merchant": "BUDI SANTOSO",
+   "occurred_at": "2026-10-17T15:13:53Z"
+  }
+ },
+ {
+  "id": "bri.co.id-05",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Dana Masuk ke Rekening BRI",
+  "body": "Dana Masuk\n\nTanggal: 22 Oktober 2026, 01:31:04 WIB\nSumber: SITI AMINAH\nNominal: Rp32.000\nKeterangan: Transfer masuk\n",
+  "received_at": "2026-10-21T18:32:04Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 3200000,
+   "type": "credit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-10-21T18:31:04Z"
+  }
+ },
+ {
+  "id": "bri.co.id-06",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Transaksi BRImo Berhasil",
+  "body": "Transaksi BRImo Berhasil\n\nTanggal: 26 Oktober 2026, 04:48:15 WIB\nJenis Transaksi: Pembayaran QRIS\nTujuan: Apotek K-24\nNominal: Rp99.999\nBiaya Admin: Rp0\nTotal: Rp99.999\n",
+  "received_at": "2026-10-25T21:49:15Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 9999900,
+   "type": "debit",
+   "merchant": "Apotek K-24",
+   "occurred_at": "2026-10-25T21:48:15Z"
+  }
+ },
+ {
+  "id": "bri.co.id-07",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Transaksi BRImo Berhasil",
+  "body": "Transaksi BRImo Berhasil\n\nTanggal: 30 Oktober 2026, 08:05:26 WIB\nJenis Transaksi: Transfer Antar Bank\nTujuan: DEWI LESTARI\nNominal: Rp125.000\nBiaya Admin: Rp2.500\nTotal: Rp127.500\n",
+  "received_at": "2026-10-30T01:06:26Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 12750000,
+   "type": "debit",
+   "merchant": "DEWI LESTARI",
+   "occurred_at": "2026-10-30T01:05:26Z"
+  }
+ },
+ {
+  "id": "bri.co.id-08",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Dana Masuk ke Rekening BRI",
+  "body": "Dana Masuk\n\nTanggal: 3 November 2026, 11:22:37 WIB\nSumber: AGUS PRASETYO\nNominal: Rp5.000\nKeterangan: Transfer masuk\n",
+  "received_at": "2026-11-03T04:23:37Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 500000,
+   "type": "credit",
+   "merchant": "AGUS PRASETYO",
+   "occurred_at": "2026-11-03T04:22:37Z"
+  }
+ },
+ {
+  "id": "bri.co.id-09",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Transaksi BRImo Berhasil",
+  "body": "Transaksi BRImo Berhasil\n\nTanggal: 7 November 2026, 14:39:48 WIB\nJenis Transaksi: Pembayaran QRIS\nTujuan: CGV Grand Indonesia\nNominal: Rp678.500,75\nBiaya Admin: Rp0\nTotal: Rp678.500,75\n",
+  "received_at": "2026-11-07T07:40:48Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 67850075,
+   "type": "debit",
+   "merchant": "CGV Grand Indonesia",
+   "occurred_at": "2026-11-07T07:39:48Z"
+  }
+ },
+ {
+  "id": "bri.co.id-10",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Transaksi BRImo Berhasil",
+  "body": "Transaksi BRImo Berhasil\n\nTanggal: 11 November 2026, 17:56:59 WIB\nJenis Transaksi: Transfer Antar Bank\nTujuan: BUDI SANTOSO\nNominal: Rp28.000\nBiaya Admin: Rp2.500\nTotal: Rp30.500\n",
+  "received_at": "2026-11-11T10:57:59Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 3050000,
+   "type": "debit",
+   "merchant": "BUDI SANTOSO",
+   "occurred_at": "2026-11-11T10:56:59Z"
+  }
+ },
+ {
+  "id": "bri.co.id-11",
+  "from": "BRImo <noreply@bri.co.id>",
+  "subject": "Dana Masuk ke Rekening BRI",
+  "body": "Dana Masuk\n\nTanggal: 15 November 2026, 21:14:10 WIB\nSumber: SITI AMINAH\nNominal: Rp1.500.000\nKeterangan: Transfer masuk\n",
+  "received_at": "2026-11-15T14:15:10Z",
+  "expect": {
+   "provider": "bri",
+   "amount_minor": 150000000,
+   "type": "credit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-11-15T14:14:10Z"
+  }
+ },
+ {
+  "id": "jenius.com-00",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Transaksi Kartu Debit Jenius",
+  "body": "Hai Rina,\n\nKamu telah melakukan transaksi menggunakan Kartu Debit Jenius di Indomaret Kemang sebesar Rp 45.500 pada 1 Okt 2026 pukul 10:05 WIB.\n\nJika bukan kamu, segera hubungi Jenius Help.",
+  "received_at": "2026-10-01T03:06:09Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 4550000,
+   "type": "debit",
+   "merchant": "Indomaret Kemang",
+   "occurred_at": "2026-10-01T03:05:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-01",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Kirim Uang Berhasil",
+  "body": "Hai Rina,\n\nKamu telah mengirim uang sebesar Rp 250.000 ke AGUS PRASETYO pada 5 Okt 2026 pukul 13:22 WIB.\n\nSalam,\nJenius",
+  "received_at": "2026-10-05T06:23:20Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 25000000,
+   "type": "debit",
+   "merchant": "AGUS PRASETYO",
+   "occurred_at": "2026-10-05T06:22:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-02",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Kamu Menerima Uang",
+  "body": "Hai Rina,\n\nKamu menerima uang sebesar Rp 15.000 dari CV. SUMBER REJEKI pada 9 Okt 2026 pukul 16:39 WIB.\n\nSalam,\nJenius",
+  "received_at": "2026-10-09T09:40:31Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 1500000,
+   "type": "credit",
+   "merchant": "CV. SUMBER REJEKI",
+   "occurred_at": "2026-10-09T09:39:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-03",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Transaksi Kartu Debit Jenius",
+  "body": "Hai Rina,\n\nKamu telah melakukan transaksi menggunakan Kartu Debit Jenius di Alfamart Jl. Sudirman sebesar Rp 7.500.000 pada 13 Okt 2026 pukul 19:56 WIB.\n\nJika bukan kamu, segera hubungi Jenius Help.",
+  "received_at": "2026-10-13T12:57:42Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 750000000,
+   "type": "debit",
+   "merchant": "Alfamart Jl. Sudirman",
+   "occurred_at": "2026-10-13T12:56:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-04",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Kirim Uang Berhasil",
+  "body": "Hai Rina,\n\nKamu telah mengirim uang sebesar Rp 32.000 ke SITI AMINAH pada 17 Okt 2026 pukul 23:13 WIB.\n\nSalam,\nJenius",
+  "received_at": "2026-10-17T16:14:53Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 3200000,
+   "type": "debit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-10-17T16:13:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-05",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Kamu Menerima Uang",
+  "body": "Hai Rina,\n\nKamu menerima uang sebesar Rp 99.999 dari PT MAJU JAYA ABADI pada 22 Okt 2026 pukul 02:31 WIB.\n\nSalam,\nJenius",
+  "received_at": "2026-10-21T19:32:04Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 9999900,
+   "type": "credit",
+   "merchant": "PT MAJU JAYA ABADI",
+   "occurred_at": "2026-10-21T19:31:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-06",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Transaksi Kartu Debit Jenius",
+  "body": "Hai Rina,\n\nKamu telah melakukan transaksi menggunakan Kartu Debit Jenius di Pertamina 34.123.05 sebesar Rp 125.000 pada 26 Okt 2026 pukul 05:48 WIB.\n\nJika bukan kamu, segera hubungi Jenius Help.",
+  "received_at": "2026-10-25T22:49:15Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 12500000,
+   "type": "debit",
+   "merchant": "Pertamina 34.123.05",
+   "occurred_at": "2026-10-25T22:48:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-07",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Kirim Uang Berhasil",
+  "body": "Hai Rina,\n\nKamu telah mengirim uang sebesar Rp 5.000 ke AGUS PRASETYO pada 30 Okt 2026 pukul 09:05 WIB.\n\nSalam,\nJenius",
+  "received_at": "2026-10-30T02:06:26Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 500000,
+   "type": "debit",
+   "merchant": "AGUS PRASETYO",
+   "occurred_at": "2026-10-30T02:05:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-08",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Kamu Menerima Uang",
+  "body": "Hai Rina,\n\nKamu menerima uang sebesar Rp 678.500,75 dari CV. SUMBER REJEKI pada 3 Nov 2026 pukul 12:22 WIB.\n\nSalam,\nJenius",
+  "received_at": "2026-11-03T05:23:37Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 67850075,
+   "type": "credit",
+   "merchant": "CV. SUMBER REJEKI",
+   "occurred_at": "2026-11-03T05:22:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-09",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Transaksi Kartu Debit Jenius",
+  "body": "Hai Rina,\n\nKamu telah melakukan transaksi menggunakan Kartu Debit Jenius di KOPI KENANGAN SUDIRMAN sebesar Rp 28.000 pada 7 Nov 2026 pukul 15:39 WIB.\n\nJika bukan kamu, segera hubungi Jenius Help.",
+  "received_at": "2026-11-07T08:40:48Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 2800000,
+   "type": "debit",
+   "merchant": "KOPI KENANGAN SUDIRMAN",
+   "occurred_at": "2026-11-07T08:39:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-10",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Kirim Uang Berhasil",
+  "body": "Hai Rina,\n\nKamu telah mengirim uang sebesar Rp 1.500.000 ke SITI AMINAH pada 11 Nov 2026 pukul 18:56 WIB.\n\nSalam,\nJenius",
+  "received_at": "2026-11-11T11:57:59Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 150000000,
+   "type": "debit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-11-11T11:56:00Z"
+  }
+ },
+ {
+  "id": "jenius.com-11",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Kamu Menerima Uang",
+  "body": "Hai Rina,\n\nKamu menerima uang sebesar Rp 12.500,50 dari PT MAJU JAYA ABADI pada 15 Nov 2026 pukul 22:14 WIB.\n\nSalam,\nJenius",
+  "received_at": "2026-11-15T15:15:10Z",
+  "expect": {
+   "provider": "jenius",
+   "amount_minor": 1250050,
+   "type": "credit",
+   "merchant": "PT MAJU JAYA ABADI",
+   "occurred_at": "2026-11-15T15:14:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-00",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Pembayaran berhasil",
+  "body": "Kamu membayar Rp250.000 ke McDonald's Sarinah pakai GoPay.\n\nWaktu: 1 Okt 2026, 11:05\nID transaksi: 0120261121ABCDEF\n",
+  "received_at": "2026-10-01T04:06:09Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 25000000,
+   "type": "debit",
+   "merchant": "McDonald's Sarinah",
+   "occurred_at": "2026-10-01T04:05:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-01",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Kirim saldo berhasil",
+  "body": "Kamu mengirim Rp15.000 ke CV. SUMBER REJEKI pakai GoPay.\n\nWaktu: 5 Okt 2026, 14:22\nID transaksi: 0120261121FEDCBA\n",
+  "received_at": "2026-10-05T07:23:20Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 1500000,
+   "type": "debit",
+   "merchant": "CV. SUMBER REJEKI",
+   "occurred_at": "2026-10-05T07:22:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-02",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Top Up berhasil",
+  "body": "Top up GoPay sebesar Rp7.500.000 dari BCA berhasil.\n\nWaktu: 9 Okt 2026, 17:39\n",
+  "received_at": "2026-10-09T10:40:31Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 750000000,
+   "type": "credit",
+   "merchant": "BCA",
+   "occurred_at": "2026-10-09T10:39:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-03",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Kamu menerima saldo",
+  "body": "Kamu menerima Rp32.000 dari SITI AMINAH di GoPay.\n\nWaktu: 13 Okt 2026, 20:56\n",
+  "received_at": "2026-10-13T13:57:42Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 3200000,
+   "type": "credit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-10-13T13:56:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-04",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Pembayaran berhasil",
+  "body": "Kamu membayar Rp99.999 ke Apotek K-24 pakai GoPay.\n\nWaktu: 18 Okt 2026, 00:13\nID transaksi: 0120261121ABCDEF\n",
+  "received_at": "2026-10-17T17:14:53Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 9999900,
+   "type": "debit",
+   "merchant": "Apotek K-24",
+   "occurred_at": "2026-10-17T17:13:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-05",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Kirim saldo berhasil",
+  "body": "Kamu mengirim Rp125.000 ke DEWI LESTARI pakai GoPay.\n\nWaktu: 22 Okt 2026, 03:31\nID transaksi: 0120261121FEDCBA\n",
+  "received_at": "2026-10-21T20:32:04Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 12500000,
+   "type": "debit",
+   "merchant": "DEWI LESTARI",
+   "occurred_at": "2026-10-21T20:31:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-06",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Top Up berhasil",
+  "body": "Top up GoPay sebesar Rp5.000 dari Kartu Debit BNI berhasil.\n\nWaktu: 26 Okt 2026, 06:48\n",
+  "received_at": "2026-10-25T23:49:15Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 500000,
+   "type": "credit",
+   "merchant": "Kartu Debit BNI",
+   "occurred_at": "2026-10-25T23:48:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-07",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Kamu menerima saldo",
+  "body": "Kamu menerima Rp678.500,75 dari CV. SUMBER REJEKI di GoPay.\n\nWaktu: 30 Okt 2026, 10:05\n",
+  "received_at": "2026-10-30T03:06:26Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 67850075,
+   "type": "credit",
+   "merchant": "CV. SUMBER REJEKI",
+   "occurred_at": "2026-10-30T03:05:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-08",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Pembayaran berhasil",
+  "body": "Kamu membayar Rp28.000 ke KOPI KENANGAN SUDIRMAN pakai GoPay.\n\nWaktu: 3 Nov 2026, 13:22\nID transaksi: 0120261121ABCDEF\n",
+  "received_at": "2026-11-03T06:23:37Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 2800000,
+   "type": "debit",
+   "merchant": "KOPI KENANGAN SUDIRMAN",
+   "occurred_at": "2026-11-03T06:22:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-09",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Kirim saldo berhasil",
+  "body": "Kamu mengirim Rp1.500.000 ke SITI AMINAH pakai GoPay.\n\nWaktu: 7 Nov 2026, 16:39\nID transaksi: 0120261121FEDCBA\n",
+  "received_at": "2026-11-07T09:40:48Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 150000000,
+   "type": "debit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-11-07T09:39:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-10",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Top Up berhasil",
+  "body": "Top up GoPay sebesar Rp12.500,50 dari BRI berhasil.\n\nWaktu: 11 Nov 2026, 19:56\n",
+  "received_at": "2026-11-11T12:57:59Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 1250050,
+   "type": "credit",
+   "merchant": "BRI",
+   "occurred_at": "2026-11-11T12:56:00Z"
+  }
+ },
+ {
+  "id": "gopay.co.id-11",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Kamu menerima saldo",
+  "body": "Kamu menerima Rp45.500 dari DEWI LESTARI di GoPay.\n\nWaktu: 15 Nov 2026, 23:14\n",
+  "received_at": "2026-11-15T16:15:10Z",
+  "expect": {
+   "provider": "gopay",
+   "amount_minor": 4550000,
+   "type": "credit",
+   "merchant": "DEWI LESTARI",
+   "occurred_at": "2026-11-15T16:14:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-00",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Pembayaran Berhasil\n\nNama Merchant\nPT. PLN (Persero)\nTanggal & Waktu\n1 Okt 2026, 12:05\nMetode Pembayaran\nOVO Cash\nTotal Pembayaran\nRp15.000\n",
+  "received_at": "2026-10-01T05:06:09Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 1500000,
+   "type": "debit",
+   "merchant": "PT. PLN (Persero)",
+   "occurred_at": "2026-10-01T05:05:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-01",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Top Up Berhasil",
+  "body": "Top Up Berhasil\n\nMetode\nBCA\nTanggal & Waktu\n5 Okt 2026, 15:22\nJumlah Top Up\nRp7.500.000\n",
+  "received_at": "2026-10-05T08:23:20Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 750000000,
+   "type": "credit",
+   "merchant": "BCA",
+   "occurred_at": "2026-10-05T08:22:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-02",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Pembayaran Berhasil\n\nNama Merchant\nNetflix\nTanggal & Waktu\n9 Okt 2026, 18:39\nMetode Pembayaran\nOVO Cash\nTotal Pembayaran\nRp32.000\n",
+  "received_at": "2026-10-09T11:40:31Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 3200000,
+   "type": "debit",
+   "merchant": "Netflix",
+   "occurred_at": "2026-10-09T11:39:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-03",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Top Up Berhasil",
+  "body": "Top Up Berhasil\n\nMetode\nBRI\nTanggal & Waktu\n13 Okt 2026, 21:56\nJumlah Top Up\nRp99.999\n",
+  "received_at": "2026-10-13T14:57:42Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 9999900,
+   "type": "credit",
+   "merchant": "BRI",
+   "occurred_at": "2026-10-13T14:56:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-04",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Pembayaran Berhasil\n\nNama Merchant\nPertamina 34.123.05\nTanggal & Waktu\n18 Okt 2026, 01:13\nMetode Pembayaran\nOVO Cash\nTotal Pembayaran\nRp125.000\n",
+  "received_at": "2026-10-17T18:14:53Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 12500000,
+   "type": "debit",
+   "merchant": "Pertamina 34.123.05",
+   "occurred_at": "2026-10-17T18:13:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-05",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Top Up Berhasil",
+  "body": "Top Up Berhasil\n\nMetode\nKartu Debit BNI\nTanggal & Waktu\n22 Okt 2026, 04:31\nJumlah Top Up\nRp5.000\n",
+  "received_at": "2026-10-21T21:32:04Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 500000,
+   "type": "credit",
+   "merchant": "Kartu Debit BNI",
+   "occurred_at": "2026-10-21T21:31:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-06",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Pembayaran Berhasil\n\nNama Merchant\nCGV Grand Indonesia\nTanggal & Waktu\n26 Okt 2026, 07:48\nMetode Pembayaran\nOVO Cash\nTotal Pembayaran\nRp678.500,75\n",
+  "received_at": "2026-10-26T00:49:15Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 67850075,
+   "type": "debit",
+   "merchant": "CGV Grand Indonesia",
+   "occurred_at": "2026-10-26T00:48:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-07",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Top Up Berhasil",
+  "body": "Top Up Berhasil\n\nMetode\nBCA\nTanggal & Waktu\n30 Okt 2026, 11:05\nJumlah Top Up\nRp28.000\n",
+  "received_at": "2026-10-30T04:06:26Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 2800000,
+   "type": "credit",
+   "merchant": "BCA",
+   "occurred_at": "2026-10-30T04:05:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-08",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Pembayaran Berhasil\n\nNama Merchant\nTokopedia\nTanggal & Waktu\n3 Nov 2026, 14:22\nMetode Pembayaran\nOVO Cash\nTotal Pembayaran\nRp1.500.000\n",
+  "received_at": "2026-11-03T07:23:37Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 150000000,
+   "type": "debit",
+   "merchant": "Tokopedia",
+   "occurred_at": "2026-11-03T07:22:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-09",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Top Up Berhasil",
+  "body": "Top Up Berhasil\n\nMetode\nBRI\nTanggal & Waktu\n7 Nov 2026, 17:39\nJumlah Top Up\nRp12.500,50\n",
+  "received_at": "2026-11-07T10:40:48Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 1250050,
+   "type": "credit",
+   "merchant": "BRI",
+   "occurred_at": "2026-11-07T10:39:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-10",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Pembayaran Berhasil\n\nNama Merchant\nIndomaret Kemang\nTanggal & Waktu\n11 Nov 2026, 20:56\nMetode Pembayaran\nOVO Cash\nTotal Pembayaran\nRp45.500\n",
+  "received_at": "2026-11-11T13:57:59Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 4550000,
+   "type": "debit",
+   "merchant": "Indomaret Kemang",
+   "occurred_at": "2026-11-11T13:56:00Z"
+  }
+ },
+ {
+  "id": "ovo.id-11",
+  "from": "OVO <no-reply@ovo.id>",
+  "subject": "Top Up Berhasil",
+  "body": "Top Up Berhasil\n\nMetode\nKartu Debit BNI\nTanggal & Waktu\n16 Nov 2026, 00:14\nJumlah Top Up\nRp250.000\n",
+  "received_at": "2026-11-15T17:15:10Z",
+  "expect": {
+   "provider": "ovo",
+   "amount_minor": 25000000,
+   "type": "credit",
+   "merchant": "Kartu Debit BNI",
+   "occurred_at": "2026-11-15T17:14:00Z"
+  }
+ },
+ {
+  "id": "dana.id-00",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Pembayaran berhasil",
+  "body": "Hai,\n\nKamu berhasil membayar Rp 7.500.000 ke Alfamart Jl. Sudirman.\nTanggal: 01/10/2026 13:05\nMetode: Saldo DANA\n",
+  "received_at": "2026-10-01T06:06:09Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 750000000,
+   "type": "debit",
+   "merchant": "Alfamart Jl. Sudirman",
+   "occurred_at": "2026-10-01T06:05:00Z"
+  }
+ },
+ {
+  "id": "dana.id-01",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Kamu menerima uang",
+  "body": "Hai,\n\nKamu menerima Rp 32.000 dari SITI AMINAH.\nTanggal: 05/10/2026 16:22\n",
+  "received_at": "2026-10-05T09:23:20Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 3200000,
+   "type": "credit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-10-05T09:22:00Z"
+  }
+ },
+ {
+  "id": "dana.id-02",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Top Up berhasil",
+  "body": "Hai,\n\nTop Up saldo DANA sebesar Rp 99.999 melalui BRI berhasil.\nTanggal: 09/10/2026 19:39\n",
+  "received_at": "2026-10-09T12:40:31Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 9999900,
+   "type": "credit",
+   "merchant": "BRI",
+   "occurred_at": "2026-10-09T12:39:00Z"
+  }
+ },
+ {
+  "id": "dana.id-03",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Pembayaran berhasil",
+  "body": "Hai,\n\nKamu berhasil membayar Rp 125.000 ke Pertamina 34.123.05.\nTanggal: 13/10/2026 22:56\nMetode: Saldo DANA\n",
+  "received_at": "2026-10-13T15:57:42Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 12500000,
+   "type": "debit",
+   "merchant": "Pertamina 34.123.05",
+   "occurred_at": "2026-10-13T15:56:00Z"
+  }
+ },
+ {
+  "id": "dana.id-04",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Kamu menerima uang",
+  "body": "Hai,\n\nKamu menerima Rp 5.000 dari AGUS PRASETYO.\nTanggal: 18/10/2026 02:13\n",
+  "received_at": "2026-10-17T19:14:53Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 500000,
+   "type": "credit",
+   "merchant": "AGUS PRASETYO",
+   "occurred_at": "2026-10-17T19:13:00Z"
+  }
+ },
+ {
+  "id": "dana.id-05",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Top Up berhasil",
+  "body": "Hai,\n\nTop Up saldo DANA sebesar Rp 678.500,75 melalui Transfer Bank Permata berhasil.\nTanggal: 22/10/2026 05:31\n",
+  "received_at": "2026-10-21T22:32:04Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 67850075,
+   "type": "credit",
+   "merchant": "Transfer Bank Permata",
+   "occurred_at": "2026-10-21T22:31:00Z"
+  }
+ },
+ {
+  "id": "dana.id-06",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Pembayaran berhasil",
+  "body": "Hai,\n\nKamu berhasil membayar Rp 28.000 ke KOPI KENANGAN SUDIRMAN.\nTanggal: 26/10/2026 08:48\nMetode: Saldo DANA\n",
+  "received_at": "2026-10-26T01:49:15Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 2800000,
+   "type": "debit",
+   "merchant": "KOPI KENANGAN SUDIRMAN",
+   "occurred_at": "2026-10-26T01:48:00Z"
+  }
+ },
+ {
+  "id": "dana.id-07",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Kamu menerima uang",
+  "body": "Hai,\n\nKamu menerima Rp 1.500.000 dari SITI AMINAH.\nTanggal: 30/10/2026 12:05\n",
+  "received_at": "2026-10-30T05:06:26Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 150000000,
+   "type": "credit",
+   "merchant": "SITI AMINAH",
+   "occurred_at": "2026-10-30T05:05:00Z"
+  }
+ },
+ {
+  "id": "dana.id-08",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Top Up berhasil",
+  "body": "Hai,\n\nTop Up saldo DANA sebesar Rp 12.500,50 melalui BRI berhasil.\nTanggal: 03/11/2026 15:22\n",
+  "received_at": "2026-11-03T08:23:37Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 1250050,
+   "type": "credit",
+   "merchant": "BRI",
+   "occurred_at": "2026-11-03T08:22:00Z"
+  }
+ },
+ {
+  "id": "dana.id-09",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Pembayaran berhasil",
+  "body": "Hai,\n\nKamu berhasil membayar Rp 45.500 ke Indomaret Kemang.\nTanggal: 07/11/2026 18:39\nMetode: Saldo DANA\n",
+  "received_at": "2026-11-07T11:40:48Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 4550000,
+   "type": "debit",
+   "merchant": "Indomaret Kemang",
+   "occurred_at": "2026-11-07T11:39:00Z"
+  }
+ },
+ {
+  "id": "dana.id-10",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Kamu menerima uang",
+  "body": "Hai,\n\nKamu menerima Rp 250.000 dari AGUS PRASETYO.\nTanggal: 11/11/2026 21:56\n",
+  "received_at": "2026-11-11T14:57:59Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 25000000,
+   "type": "credit",
+   "merchant": "AGUS PRASETYO",
+   "occurred_at": "2026-11-11T14:56:00Z"
+  }
+ },
+ {
+  "id": "dana.id-11",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Top Up berhasil",
+  "body": "Hai,\n\nTop Up saldo DANA sebesar Rp 15.000 melalui Transfer Bank Permata berhasil.\nTanggal: 16/11/2026 01:14\n",
+  "received_at": "2026-11-15T18:15:10Z",
+  "expect": {
+   "provider": "dana",
+   "amount_minor": 1500000,
+   "type": "credit",
+   "merchant": "Transfer Bank Permata",
+   "occurred_at": "2026-11-15T18:14:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-00",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Pembayaran ShopeePay berhasil",
+  "body": "Pembayaran ShopeePay berhasil\n\nMerchant: Netflix\nTotal Pembayaran: Rp32.000\nWaktu Transaksi: 01-10-2026 14:05\nNo. Pesanan: 261121ABC123\n",
+  "received_at": "2026-10-01T07:06:09Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 3200000,
+   "type": "debit",
+   "merchant": "Netflix",
+   "occurred_at": "2026-10-01T07:05:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-01",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Isi Saldo ShopeePay berhasil",
+  "body": "Isi Saldo ShopeePay berhasil\n\nMetode: BRI\nJumlah: Rp99.999\nWaktu Transaksi: 05-10-2026 17:22\n",
+  "received_at": "2026-10-05T10:23:20Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 9999900,
+   "type": "credit",
+   "merchant": "BRI",
+   "occurred_at": "2026-10-05T10:22:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-02",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Pengembalian Dana ShopeePay",
+  "body": "Pengembalian Dana ShopeePay berhasil\n\nMerchant: Pertamina 34.123.05\nJumlah Pengembalian: Rp125.000\nWaktu Transaksi: 09-10-2026 20:39\n",
+  "received_at": "2026-10-09T13:40:31Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 12500000,
+   "type": "credit",
+   "merchant": "Pertamina 34.123.05",
+   "occurred_at": "2026-10-09T13:39:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-03",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Pembayaran ShopeePay berhasil",
+  "body": "Pembayaran ShopeePay berhasil\n\nMerchant: Warung Padang Sederhana\nTotal Pembayaran: Rp5.000\nWaktu Transaksi: 13-10-2026 23:56\nNo. Pesanan: 261121ABC123\n",
+  "received_at": "2026-10-13T16:57:42Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 500000,
+   "type": "debit",
+   "merchant": "Warung Padang Sederhana",
+   "occurred_at": "2026-10-13T16:56:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-04",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Isi Saldo ShopeePay berhasil",
+  "body": "Isi Saldo ShopeePay berhasil\n\nMetode: Transfer Bank Permata\nJumlah: Rp678.500,75\nWaktu Transaksi: 18-10-2026 03:13\n",
+  "received_at": "2026-10-17T20:14:53Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 67850075,
+   "type": "credit",
+   "merchant": "Transfer Bank Permata",
+   "occurred_at": "2026-10-17T20:13:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-05",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Pengembalian Dana ShopeePay",
+  "body": "Pengembalian Dana ShopeePay berhasil\n\nMerchant: KOPI KENANGAN SUDIRMAN\nJumlah Pengembalian: Rp28.000\nWaktu Transaksi: 22-10-2026 06:31\n",
+  "received_at": "2026-10-21T23:32:04Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 2800000,
+   "type": "credit",
+   "merchant": "KOPI KENANGAN SUDIRMAN",
+   "occurred_at": "2026-10-21T23:31:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-06",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Pembayaran ShopeePay berhasil",
+  "body": "Pembayaran ShopeePay berhasil\n\nMerchant: Tokopedia\nTotal Pembayaran: Rp1.500.000\nWaktu Transaksi: 26-10-2026 09:48\nNo. Pesanan: 261121ABC123\n",
+  "received_at": "2026-10-26T02:49:15Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 150000000,
+   "type": "debit",
+   "merchant": "Tokopedia",
+   "occurred_at": "2026-10-26T02:48:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-07",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Isi Saldo ShopeePay berhasil",
+  "body": "Isi Saldo ShopeePay berhasil\n\nMetode: BRI\nJumlah: Rp12.500,50\nWaktu Transaksi: 30-10-2026 13:05\n",
+  "received_at": "2026-10-30T06:06:26Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 1250050,
+   "type": "credit",
+   "merchant": "BRI",
+   "occurred_at": "2026-10-30T06:05:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-08",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Pengembalian Dana ShopeePay",
+  "body": "Pengembalian Dana ShopeePay berhasil\n\nMerchant: Indomaret Kemang\nJumlah Pengembalian: Rp45.500\nWaktu Transaksi: 03-11-2026 16:22\n",
+  "received_at": "2026-11-03T09:23:37Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 4550000,
+   "type": "credit",
+   "merchant": "Indomaret Kemang",
+   "occurred_at": "2026-11-03T09:22:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-09",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Pembayaran ShopeePay berhasil",
+  "body": "Pembayaran ShopeePay berhasil\n\nMerchant: McDonald's Sarinah\nTotal Pembayaran: Rp250.000\nWaktu Transaksi: 07-11-2026 19:39\nNo. Pesanan: 261121ABC123\n",
+  "received_at": "2026-11-07T12:40:48Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 25000000,
+   "type": "debit",
+   "merchant": "McDonald's Sarinah",
+   "occurred_at": "2026-11-07T12:39:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-10",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Isi Saldo ShopeePay berhasil",
+  "body": "Isi Saldo ShopeePay berhasil\n\nMetode: Transfer Bank Permata\nJumlah: Rp15.000\nWaktu Transaksi: 11-11-2026 22:56\n",
+  "received_at": "2026-11-11T15:57:59Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 1500000,
+   "type": "credit",
+   "merchant": "Transfer Bank Permata",
+   "occurred_at": "2026-11-11T15:56:00Z"
+  }
+ },
+ {
+  "id": "shopee.co.id-11",
+  "from": "ShopeePay <noreply@shopee.co.id>",
+  "subject": "Pengembalian Dana ShopeePay",
+  "body": "Pengembalian Dana ShopeePay berhasil\n\nMerchant: Alfamart Jl. Sudirman\nJumlah Pengembalian: Rp7.500.000\nWaktu Transaksi: 16-11-2026 02:14\n",
+  "received_at": "2026-11-15T19:15:10Z",
+  "expect": {
+   "provider": "shopeepay",
+   "amount_minor": 750000000,
+   "type": "credit",
+   "merchant": "Alfamart Jl. Sudirman",
+   "occurred_at": "2026-11-15T19:14:00Z"
+  }
+ },
+ {
+  "id": "generic-00",
+  "from": "BNI <notifikasi@bni.co.id>",
+  "subject": "Transaksi Berhasil",
+  "body": "Transaksi Anda sebesar Rp 75.000 di ALFAMIDI telah berhasil.",
+  "received_at": "2026-10-01T12:05:09Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 7500000,
+   "type": "debit",
+   "merchant": null,
+   "occurred_at": "2026-10-01T12:05:09Z"
+  }
+ },
+ {
+  "id": "generic-01",
+  "from": "CIMB Niaga <noreply@cimbniaga.co.id>",
+  "subject": "Notifikasi Pembayaran",
+  "body": "Pembayaran tagihan sebesar IDR 1.250.000,00 telah diproses.",
+  "received_at": "2026-10-05T15:22:20Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 125000000,
+   "type": "debit",
+   "merchant": null,
+   "occurred_at": "2026-10-05T15:22:20Z"
+  }
+ },
+ {
+  "id": "generic-02",
+  "from": "PermataBank <no-reply@permatabank.co.id>",
+  "subject": "Dana Masuk",
+  "body": "Rekening Anda menerima dana sebesar Rp5.000.000 dari PT ABC.",
+  "received_at": "2026-10-09T18:39:31Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 500000000,
+   "type": "credit",
+   "merchant": null,
+   "occurred_at": "2026-10-09T18:39:31Z"
+  }
+ },
+ {
+  "id": "generic-03",
+  "from": "SeaBank <noreply@seabank.co.id>",
+  "subject": "Transfer Berhasil",
+  "body": "Transfer Rp. 350.000 ke rekening tujuan berhasil.",
+  "received_at": "2026-10-13T21:56:42Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 35000000,
+   "type": "debit",
+   "merchant": null,
+   "occurred_at": "2026-10-13T21:56:42Z"
+  }
+ },
+ {
+  "id": "generic-04",
+  "from": "LinkAja <info@linkaja.id>",
+  "subject": "Top Up Berhasil",
+  "body": "Saldo LinkAja kamu bertambah Rp100.000.",
+  "received_at": "2026-10-18T01:13:53Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 10000000,
+   "type": "credit",
+   "merchant": null,
+   "occurred_at": "2026-10-18T01:13:53Z"
+  }
+ },
+ {
+  "id": "generic-05",
+  "from": "blu <noreply@blubybcadigital.id>",
+  "subject": "Transaksi QRIS berhasil",
+  "body": "Kamu bayar Rp 18.500 pakai QRIS.\nBiaya: Rp0",
+  "received_at": "2026-10-22T04:31:04Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 1850000,
+   "type": "debit",
+   "merchant": null,
+   "occurred_at": "2026-10-22T04:31:04Z"
+  }
+ },
+ {
+  "id": "generic-06",
+  "from": "Bank Danamon <notif@danamon.co.id>",
+  "subject": "Notifikasi Transaksi Kartu Kredit",
+  "body": "Transaksi Kartu Kredit Anda sebesar Rp 2.345.678,90 di TRAVELOKA.",
+  "received_at": "2026-10-26T07:48:15Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 234567890,
+   "type": "debit",
+   "merchant": null,
+   "occurred_at": "2026-10-26T07:48:15Z"
+  }
+ },
+ {
+  "id": "generic-07",
+  "from": "Bank Neo <noreply@bankneo.co.id>",
+  "subject": "Cashback diterima - transaksi berhasil",
+  "body": "Selamat! Cashback Rp 5.000 sudah masuk ke saldo kamu.",
+  "received_at": "2026-10-30T11:05:26Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 500000,
+   "type": "credit",
+   "merchant": null,
+   "occurred_at": "2026-10-30T11:05:26Z"
+  }
+ },
+ {
+  "id": "generic-08",
+  "from": "OCBC <notifikasi@ocbc.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Biaya admin: Rp0\nJumlah pembayaran: Rp 420.000",
+  "received_at": "2026-11-03T14:22:37Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 42000000,
+   "type": "debit",
+   "merchant": null,
+   "occurred_at": "2026-11-03T14:22:37Z"
+  }
+ },
+ {
+  "id": "generic-09",
+  "from": "Maybank <noreply@maybank.co.id>",
+  "subject": "Payment Receipt",
+  "body": "Your payment of IDR 99,000.00 was successful.",
+  "received_at": "2026-11-07T17:39:48Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 9900000,
+   "type": "debit",
+   "merchant": null,
+   "occurred_at": "2026-11-07T17:39:48Z"
+  }
+ },
+ {
+  "id": "generic-10",
+  "from": "Bank Jago <noreply@jago.com>",
+  "subject": "Refund berhasil",
+  "body": "Pengembalian dana Rp 64.900 dari merchant sudah kami proses.",
+  "received_at": "2026-11-11T20:56:59Z",
+  "expect": {
+   "provider": "generic",
+   "amount_minor": 6490000,
+   "type": "credit",
+   "merchant": null,
+   "occurred_at": "2026-11-11T20:56:59Z"
+  }
+ },
+ {
+  "id": "unparsed-00",
+  "from": "BCA <bca@bca.co.id>",
+  "subject": "Kode OTP BCA",
+  "body": "Kode OTP Anda 123456. Jangan berikan kepada siapa pun.",
+  "received_at": "2026-10-01T18:05:09Z",
+  "expect": null
+ },
+ {
+  "id": "unparsed-01",
+  "from": "GoPay <no-reply@gopay.co.id>",
+  "subject": "Promo akhir tahun: cashback hingga Rp50.000",
+  "body": "Nikmati cashback hingga Rp50.000 untuk pembelian pertama kamu.",
+  "received_at": "2026-10-05T21:22:20Z",
+  "expect": null
+ },
+ {
+  "id": "unparsed-02",
+  "from": "DANA <no-reply@dana.id>",
+  "subject": "Pembaruan Syarat dan Ketentuan",
+  "body": "Kami memperbarui Syarat dan Ketentuan layanan DANA.",
+  "received_at": "2026-10-10T00:39:31Z",
+  "expect": null
+ },
+ {
+  "id": "unparsed-03",
+  "from": "Jenius <no-reply@jenius.com>",
+  "subject": "Login baru terdeteksi",
+  "body": "Kami mendeteksi login baru ke akun Jenius kamu dari perangkat lain.",
+  "received_at": "2026-10-14T03:56:42Z",
+  "expect": null
+ },
+ {
+  "id": "unparsed-04",
+  "from": "Livin' by Mandiri <noreply.livin@bankmandiri.co.id>",
+  "subject": "Pembayaran Berhasil",
+  "body": "Hai RINA,\nPembayaran kamu berhasil! Rincian tersedia di aplikasi.",
+  "received_at": "2026-10-18T07:13:53Z",
+  "expect": null
+ }
+]

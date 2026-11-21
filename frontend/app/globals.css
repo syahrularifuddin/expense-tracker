@@ -1,0 +1,174 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-brand: var(--brand);
+  --color-success: var(--success);
+  --color-track: var(--track);
+  --shadow-card: var(--shadow-card);
+  --shadow-pop: var(--shadow-pop);
+  /* Kontrol berbentuk pill (rounded-full); kartu & dialog 28px. */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1.75rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 2rem;
+  --radius-4xl: 2rem;
+}
+
+/* Netral lembut + satu aksen oranye. Aksi utama gelap/netral, oranye untuk sorotan. */
+:root {
+  --background: #f3f3f5;
+  --foreground: #1d1d1f;
+  --card: #ffffff;
+  --card-foreground: #1d1d1f;
+  --popover: #ffffff;
+  --popover-foreground: #1d1d1f;
+  --primary: #1d1d1f;
+  --primary-foreground: #ffffff;
+  --secondary: #ededf0;
+  --secondary-foreground: #1d1d1f;
+  --muted: #ededf0;
+  --muted-foreground: #6e6e73;
+  --accent: #f3f3f5;
+  --accent-foreground: #1d1d1f;
+  --destructive: #c93c37;
+  --brand: #e8833a;
+  --success: #2f8f5b;
+  --track: #ececef;
+  --border: #e6e6ea;
+  --input: #dedee3;
+  --ring: #e8833a;
+  --chart-1: #e8833a;
+  --chart-2: #7c8597;
+  --chart-3: #2f8f5b;
+  --chart-4: #b7bcc7;
+  --chart-5: #c96a2a;
+  --radius: 0.75rem;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.03), 0 6px 24px rgb(0 0 0 / 0.04);
+  --shadow-pop: 0 2px 6px rgb(0 0 0 / 0.06), 0 16px 48px rgb(0 0 0 / 0.12);
+
+  --loz-success-bg: #e6f3ec;
+  --loz-success-fg: #2a7a4c;
+  --loz-danger-bg: #fbe9e8;
+  --loz-danger-fg: #b2352f;
+  --loz-info-bg: #fdeee3;
+  --loz-info-fg: #b95a1c;
+  --loz-warning-bg: #fdeee3;
+  --loz-warning-fg: #b95a1c;
+  --loz-neutral-bg: #ededf0;
+  --loz-neutral-fg: #5b5b61;
+}
+
+.dark {
+  --background: #111113;
+  --foreground: #f2f2f4;
+  --card: #1c1c1f;
+  --card-foreground: #f2f2f4;
+  --popover: #232327;
+  --popover-foreground: #f2f2f4;
+  --primary: #f2f2f4;
+  --primary-foreground: #111113;
+  --secondary: #2a2a2e;
+  --secondary-foreground: #f2f2f4;
+  --muted: #2a2a2e;
+  --muted-foreground: #a1a1a8;
+  --accent: #26262a;
+  --accent-foreground: #f2f2f4;
+  --destructive: #f2736b;
+  --brand: #f0954f;
+  --success: #5cc285;
+  --track: #2c2c31;
+  --border: #2c2c31;
+  --input: #3a3a40;
+  --ring: #f0954f;
+  --chart-1: #f0954f;
+  --chart-2: #8f98aa;
+  --chart-3: #5cc285;
+  --chart-4: #5b606b;
+  --chart-5: #e07b3a;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-pop: 0 16px 48px rgb(0 0 0 / 0.5);
+
+  --loz-success-bg: #17301f;
+  --loz-success-fg: #7fd6a2;
+  --loz-danger-bg: #3a1d1b;
+  --loz-danger-fg: #f6a19b;
+  --loz-info-bg: #3a2416;
+  --loz-info-fg: #f6b07a;
+  --loz-warning-bg: #3a2416;
+  --loz-warning-fg: #f6b07a;
+  --loz-neutral-bg: #2a2a2e;
+  --loz-neutral-fg: #b4b4ba;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 15px;
+    line-height: 22px;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  /* Pill status: latar lembut, teks berwarna, titik opsional. */
+  .lozenge {
+    @apply inline-flex h-7 items-center gap-1.5 rounded-full px-3 text-sm font-medium whitespace-nowrap;
+    background: var(--loz-neutral-bg);
+    color: var(--loz-neutral-fg);
+  }
+  .lozenge[data-dot]::before {
+    content: "";
+    @apply size-1.5 rounded-full;
+    background: currentColor;
+  }
+  .lozenge[data-tone="success"] { background: var(--loz-success-bg); color: var(--loz-success-fg); }
+  .lozenge[data-tone="danger"] { background: var(--loz-danger-bg); color: var(--loz-danger-fg); }
+  .lozenge[data-tone="info"] { background: var(--loz-info-bg); color: var(--loz-info-fg); }
+  .lozenge[data-tone="warning"] { background: var(--loz-warning-bg); color: var(--loz-warning-fg); }
+
+  /* <select>, <input type=date|month> native dengan bentuk pill. */
+  .field {
+    @apply h-9 min-w-0 rounded-full border border-input bg-card px-3.5 text-sm outline-none
+      focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40;
+  }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}

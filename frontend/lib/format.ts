@@ -1,0 +1,44 @@
+const TZ = "Asia/Jakarta";
+
+/** Nominal dalam sen -> "Rp 12.500" / "Rp 12.500,50". */
+export function rupiah(minor: number): string {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: minor % 100 ? 2 : 0,
+    maximumFractionDigits: 2,
+  }).format(minor / 100);
+}
+
+/** Untuk sumbu grafik: "1,5 jt". */
+export function rupiahCompact(minor: number): string {
+  return new Intl.NumberFormat("id-ID", { notation: "compact", maximumFractionDigits: 1 }).format(minor / 100);
+}
+
+export function dateTime(iso: string): string {
+  return new Intl.DateTimeFormat("id-ID", { timeZone: TZ, dateStyle: "medium", timeStyle: "short" }).format(
+    new Date(iso),
+  );
+}
+
+/** Bulan berjalan di Jakarta sebagai "YYYY-MM". */
+export function currentMonth(): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit" }).format(new Date());
+}
+
+/** "2026-11" -> "November 2026" */
+export function monthLabel(month: string, short = false): string {
+  return new Intl.DateTimeFormat("id-ID", { month: short ? "short" : "long", year: short ? "2-digit" : "numeric" }).format(
+    new Date(`${month}-15T00:00:00Z`),
+  );
+}
+
+/** Nilai awal <input type="datetime-local">: jam dinding Jakarta saat ini. */
+export function nowJakartaInput(): string {
+  return new Date(Date.now() + 7 * 3600_000).toISOString().slice(0, 16);
+}
+
+/** Nilai <input type="datetime-local"> dibaca sebagai waktu Jakarta (UTC+7, tanpa DST). */
+export function jakartaInputToIso(value: string): string {
+  return new Date(`${value}:00+07:00`).toISOString();
+}
