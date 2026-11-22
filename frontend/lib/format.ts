@@ -26,6 +26,11 @@ export function dayMonth(date: string): string {
   return new Intl.DateTimeFormat("id-ID", { timeZone: "UTC", day: "numeric", month: "short" }).format(new Date(date));
 }
 
+/** "2026-11-25" -> "2026-11-24" */
+export function previousDay(date: string): string {
+  return new Date(Date.parse(`${date}T00:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
+}
+
 /** Bulan berjalan di Jakarta sebagai "YYYY-MM". */
 export function currentMonth(): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit" }).format(new Date());

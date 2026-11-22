@@ -11,7 +11,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api, qs } from "@/lib/api";
-import { currentMonth, dayMonth, monthLabel } from "@/lib/format";
+import { currentMonth, dayMonth, monthLabel, previousDay } from "@/lib/format";
 import type { CardBill, Page, Summary, Transaction } from "@/lib/types";
 
 function Stat({ label, children }: { label: string; children: React.ReactNode }) {
@@ -78,14 +78,22 @@ export default function DashboardPage() {
                 <Money minor={b.total} />
               </div>
             </div>
-            <div className="text-muted-foreground sm:text-right">
-              <div>
-                Terbit {dayMonth(b.statement_date)} · transaksi sejak {dayMonth(b.from)}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <div className="text-muted-foreground sm:text-right">
+                <div>
+                  Terbit {dayMonth(b.statement_date)} · transaksi sejak {dayMonth(b.from)}
+                </div>
+                <div>
+                  {b.count} transaksi, refund sudah dikurangi
+                  {b.foreign_count > 0 && ` · ${b.foreign_count} transaksi valas belum dihitung`}
+                </div>
               </div>
-              <div>
-                {b.count} transaksi, refund sudah dikurangi
-                {b.foreign_count > 0 && ` · ${b.foreign_count} transaksi valas belum dihitung`}
-              </div>
+              <Link
+                href={`/transactions${qs({ provider: b.provider, from: b.from, to: previousDay(b.statement_date) })}`}
+                className={buttonVariants({ variant: "secondary", size: "sm" })}
+              >
+                Lihat transaksi
+              </Link>
             </div>
           </CardContent>
         </Card>

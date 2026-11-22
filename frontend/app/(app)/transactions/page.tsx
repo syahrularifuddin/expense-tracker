@@ -2,7 +2,8 @@
 
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight, Inbox, Plus, Search } from "lucide-react";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { EmptyState, ErrorNote, MethodFilter, PageHeader } from "@/components/bits";
 import { TransactionTable } from "@/components/transaction-table";
 import { Button } from "@/components/ui/button";
@@ -19,8 +20,25 @@ import type { Page, Transaction } from "@/lib/types";
 const PER_PAGE = 20;
 const EMPTY = { q: "", from: "", to: "", category_id: "", type: "", provider: "" };
 
+type Filters = typeof EMPTY;
+
+// useSearchParams butuh batas Suspense agar build produksi bisa prerender halaman.
 export default function TransactionsPage() {
-  const [filters, setFilters] = useState(EMPTY);
+  return (
+    <Suspense>
+      <Transactions />
+    </Suspense>
+  );
+}
+
+/** Filter awal bisa datang dari URL, mis. tautan estimasi tagihan di dashboard. */
+function Transactions() {
+  const params = useSearchParams();
+  const [filters, setFilters] = useState<Filters>(() => {
+    const f = { ...EMPTY };
+    for (const k of Object.keys(EMPTY) as (keyof Filters)[]) f[k] = params.get(k) ?? "";
+    return f;
+  });
   const [page, setPage] = useState(1);
   const [adding, setAdding] = useState(false);
   const categories = useCategories();
@@ -30,7 +48,7 @@ export default function TransactionsPage() {
     queryFn: () => api<Page<Transaction>>(`/transactions${qs({ ...filters, page, per_page: PER_PAGE })}`),
     placeholderData: keepPreviousData,
   });
-  const set = (patch: Partial<typeof EMPTY>) => {
+  const set = (patch: Partial<Filters>) => {
     setFilters((f) => ({ ...f, ...patch }));
     setPage(1);
   };
