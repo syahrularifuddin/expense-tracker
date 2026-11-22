@@ -84,9 +84,9 @@ these limits requires Google's app verification.
 | `MOCK_GMAIL` | `false` hides the dev user button |
 | `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | Same values as the backend Client ID / Secret |
 
-Restart the backend and frontend, then sign in with Google. The first sync pulls
-the last 90 days of email from enabled senders; later syncs are incremental,
-every 5 minutes.
+Restart the backend and frontend, then sign in with Google. The first sync scans
+back through all matching notification emails (up to 5,000); later syncs are
+incremental, every 5 minutes.
 
 ## How it works
 
@@ -94,22 +94,33 @@ every 5 minutes.
   refresh token to the backend (`POST /auth/exchange`). The Gmail refresh token is
   stored encrypted (AES-256-GCM) and never reaches the browser. The backend issues
   a 15-minute access JWT plus a session refresh token (hashed, rotated, 30 days).
-- **Sync**: a background worker per user. Emails are parsed by a rule engine
-  (`backend/config/senders.toml`: sender + regex with `amount`, `merchant`, `date`,
-  `type` groups). Emails that fail to parse appear under "Email gagal diproses"
-  (failed emails) in Settings.
-- **Amounts** are stored in cents (`amount_minor`), times in UTC, displayed in
-  Asia/Jakarta time.
+- **Sync**: a background worker per user. Only emails whose sender and subject
+  match a rule are fetched; promos and OTPs from the same banks are skipped. Emails
+  are parsed by a rule engine (`backend/config/senders.toml`: sender, subject,
+  regex with `amount`, `merchant`, `date`, `type`, `currency` groups). Matching
+  emails that fail to parse appear under "Email gagal diproses" (failed emails) in
+  Settings.
+- **Supported sources** (formats taken from real emails): Jenius credit card,
+  Krom (transfer and QRIS), BCA myBCA "Internet Transaction Journal" (QRIS and
+  transfer). More banks will follow.
+- **Amounts** are stored in cents (`amount_minor`) with a currency code, times in
+  UTC, displayed in Asia/Jakarta time. Reports sum IDR only.
 
 The app UI is in Indonesian.
 
 ## Adding a bank or e-wallet
 
-Add a `[[rule]]` to `backend/config/senders.toml`, add sample emails to
-`backend/fixtures/generate.py`, then run:
+Add a `[[rule]]` to `backend/config/senders.toml`, add anonymized sample emails
+to `backend/fixtures/generate.py`, then run:
 
 ```bash
 cd backend && python3 fixtures/generate.py && cargo test
+```
+
+To measure the rules against real emails saved locally (never commit that file):
+
+```bash
+cd backend && CORPUS=/path/to/corpus.json cargo test --test real_corpus -- --ignored --nocapture
 ```
 
 Global rules are re-seeded from that file every time the backend starts.
@@ -126,12 +137,10 @@ cd frontend && npm run lint && npm run build
 
 ## Known limitations
 
-- The email templates and sender domains in `senders.toml` are guesses and have
-  not been matched against real emails from each bank. The real Gmail path (OAuth,
-  `history.list`, MIME parsing) has never run against a real account; only mock
-  mode is tested end to end.
-- The generic rule guesses debit/credit from keywords; failed or declined
-  transaction emails may be recorded as transactions.
-- A full sync is capped at 500 emails (5 pages × 100).
+- Only three sources are supported so far (Jenius credit card, Krom, BCA myBCA
+  journal). Other banks' emails are ignored.
+- Transfers to your own accounts are recorded as debits in the "Transfer"
+  category, so they count as expenses.
+- A full sync is capped at 5,000 emails.
 - Polling only, no Pub/Sub push. Single currency (IDR). No production deployment
   configuration.

@@ -3,7 +3,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight, Inbox, Plus, Search } from "lucide-react";
 import { useState } from "react";
-import { EmptyState, ErrorNote, PageHeader } from "@/components/bits";
+import { EmptyState, ErrorNote, MethodFilter, PageHeader } from "@/components/bits";
 import { TransactionTable } from "@/components/transaction-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,7 +17,7 @@ import { useCategories } from "@/lib/hooks";
 import type { Page, Transaction } from "@/lib/types";
 
 const PER_PAGE = 20;
-const EMPTY = { q: "", from: "", to: "", category_id: "", type: "", source: "" };
+const EMPTY = { q: "", from: "", to: "", category_id: "", type: "", provider: "" };
 
 export default function TransactionsPage() {
   const [filters, setFilters] = useState(EMPTY);
@@ -73,16 +73,14 @@ export default function TransactionsPage() {
           <option value="debit">Keluar</option>
           <option value="credit">Masuk</option>
         </select>
-        <select aria-label="Sumber" className="field" value={filters.source} onChange={(e) => set({ source: e.target.value })}>
-          <option value="">Semua sumber</option>
-          <option value="gmail">Gmail</option>
-          <option value="manual">Manual</option>
-        </select>
         {filtered && (
           <Button variant="ghost" onClick={() => set(EMPTY)}>
             Reset
           </Button>
         )}
+      </div>
+      <div className="mb-4">
+        <MethodFilter value={filters.provider} onChange={(provider) => set({ provider })} />
       </div>
 
       <ErrorNote error={list.error} />

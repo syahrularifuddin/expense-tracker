@@ -1,17 +1,18 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Inbox } from "lucide-react";
 import Link from "next/link";
-import { EmptyState, ErrorNote, Money, PageHeader } from "@/components/bits";
+import { useState } from "react";
+import { EmptyState, ErrorNote, MethodBadge, MethodFilter, Money, PageHeader } from "@/components/bits";
 import { CategoryBars, DailyBars } from "@/components/charts";
 import { TransactionTable } from "@/components/transaction-table";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { api } from "@/lib/api";
-import { currentMonth, monthLabel } from "@/lib/format";
-import type { Page, Summary, Transaction } from "@/lib/types";
+import { api, qs } from "@/lib/api";
+import { currentMonth, dayMonth, monthLabel } from "@/lib/format";
+import type { CardBill, Page, Summary, Transaction } from "@/lib/types";
 
 function Stat({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -26,21 +27,28 @@ function Stat({ label, children }: { label: string; children: React.ReactNode })
 
 export default function DashboardPage() {
   const month = currentMonth();
+  const [provider, setProvider] = useState("");
   const summary = useQuery({
-    queryKey: ["summary", month],
-    queryFn: () => api<Summary>(`/reports/summary?month=${month}`),
+    queryKey: ["summary", month, provider],
+    queryFn: () => api<Summary>(`/reports/summary${qs({ month, provider })}`),
+    placeholderData: keepPreviousData,
   });
   const recent = useQuery({
-    queryKey: ["transactions", "recent"],
-    queryFn: () => api<Page<Transaction>>("/transactions?per_page=10"),
+    queryKey: ["transactions", "recent", provider],
+    queryFn: () => api<Page<Transaction>>(`/transactions${qs({ per_page: 10, provider })}`),
+    placeholderData: keepPreviousData,
   });
+  const bills = useQuery({ queryKey: ["transactions", "card-bills"], queryFn: () => api<CardBill[]>("/reports/card-bills") });
   const s = summary.data;
   const net = s ? s.total_income - s.total_expense : 0;
 
   return (
     <>
       <PageHeader title="Ringkasan">{monthLabel(month)}</PageHeader>
-      <ErrorNote error={summary.error ?? recent.error} />
+      <ErrorNote error={summary.error ?? recent.error ?? bills.error} />
+      <div className="mb-4">
+        <MethodFilter value={provider} onChange={setProvider} />
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-3 sm:gap-5">
         <Stat label="Pengeluaran">{s ? <Money minor={s.total_expense} /> : <Skeleton className="h-9 w-40" />}</Stat>
@@ -58,6 +66,30 @@ export default function DashboardPage() {
           )}
         </Stat>
       </div>
+
+      {bills.data?.map((b) => (
+        <Card key={b.provider} size="sm" className="mt-4 sm:mt-5">
+          <CardContent className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+            <div>
+              <div className="flex items-center gap-2 text-muted-foreground">
+                Estimasi tagihan <MethodBadge provider={b.provider} />
+              </div>
+              <div className="mt-1 text-[28px] leading-9 font-semibold tracking-tight">
+                <Money minor={b.total} />
+              </div>
+            </div>
+            <div className="text-muted-foreground sm:text-right">
+              <div>
+                Terbit {dayMonth(b.statement_date)} · transaksi sejak {dayMonth(b.from)}
+              </div>
+              <div>
+                {b.count} transaksi, refund sudah dikurangi
+                {b.foreign_count > 0 && ` · ${b.foreign_count} transaksi valas belum dihitung`}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
 
       <div className="mt-5 grid gap-4 sm:gap-5 lg:grid-cols-2">
         <Card>
@@ -102,7 +134,7 @@ export default function DashboardPage() {
           ) : recent.data.items.length ? (
             <TransactionTable items={recent.data.items} />
           ) : (
-            <EmptyState icon={Inbox} text="Belum ada transaksi. Tekan Sync untuk menarik email." />
+            <EmptyState icon={Inbox} text={provider ? "Tidak ada transaksi dengan metode ini." : "Belum ada transaksi. Tekan Sync untuk menarik email."} />
           )}
         </CardContent>
       </Card>

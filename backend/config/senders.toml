@@ -1,154 +1,145 @@
-# Daftar sender + aturan parser global. Di-seed ke tabel parser_rules (user_id NULL).
+# Aturan parser global, di-seed ke tabel parser_rules (user_id NULL) setiap backend start.
 #
-# sender          : potongan alamat From (case-insensitive). Kosong = semua sender.
-# subject_pattern : regex opsional untuk subject.
-# body_regex      : regex dengan named groups: amount (wajib), merchant, date, type.
+# sender          : potongan alamat From (case-insensitive).
+# subject_pattern : regex subjek. Email yang pengirim + subjeknya tidak cocok aturan mana pun
+#                   dilewati (promo, OTP, info akun), tidak dicatat sebagai gagal parse.
+# search_subject  : frasa untuk query Gmail `subject:"..."` (mempersempit pencarian).
+# body_regex      : regex dengan named groups: amount (wajib), merchant, date, type, currency.
+#                   Body sudah berupa teks: HTML dibuang, satu baris per blok.
 # default_type    : debit | credit, dipakai jika group `type` tidak ada.
+# category        : nama kategori default (menang atas kata kunci merchant).
 # priority        : besar = dicoba lebih dulu. Aturan pertama yang cocok menang.
+# enabled         : false = templat saja (tidak dipakai saat sinkron).
 #
-# PERHATIAN: domain sender dan template di bawah adalah perkiraan, belum
-# dicocokkan dengan email asli. Sesuaikan regex setelah melihat email sungguhan
-# (lihat tabel unparsed_emails).
+# Format di bawah diambil dari email asli (Nov 2026). Contoh anonim ada di fixtures/generate.py.
 
-# ---------- BCA ----------
-[[rule]]
-provider = "bca"
-sender = "bca.co.id"
-default_type = "debit"
-body_regex = '''(?si)Tanggal Transaksi\s*:\s*(?P<date>[^\n]+)\n.*?Merchant\s*:\s*(?P<merchant>[^\n]+?)\s*\n.*?Jumlah\s*:\s*Rp\s*(?P<amount>[\d.,]+)'''
-
-[[rule]]
-provider = "bca"
-sender = "bca.co.id"
-default_type = "debit"
-body_regex = '''(?si)Tanggal\s*:\s*(?P<date>[^\n]+)\n.*?Penerima\s*:\s*(?P<merchant>[^\n]+?)\s*\n.*?Nominal\s*:\s*Rp\s*(?P<amount>[\d.,]+)'''
-
-[[rule]]
-provider = "bca"
-sender = "bca.co.id"
-default_type = "credit"
-body_regex = '''(?si)Tanggal\s*:\s*(?P<date>[^\n]+)\n.*?Pengirim\s*:\s*(?P<merchant>[^\n]+?)\s*\n.*?Nominal\s*:\s*Rp\s*(?P<amount>[\d.,]+)'''
-
-# ---------- Mandiri (Livin') ----------
-[[rule]]
-provider = "mandiri"
-sender = "bankmandiri.co.id"
-default_type = "debit"
-body_regex = '''(?si)Penerima\s*\n\s*(?P<merchant>[^\n]+?)\s*\n.*?Tanggal\s*\n\s*(?P<date>[^\n]+\n\s*Jam\s*\n\s*[^\n]+)\n.*?Nominal Transaksi\s*\n\s*Rp\s*(?P<amount>[\d.,]+)'''
-
-[[rule]]
-provider = "mandiri"
-sender = "bankmandiri.co.id"
-default_type = "credit"
-body_regex = '''(?si)Pengirim\s*\n\s*(?P<merchant>[^\n]+?)\s*\n.*?Tanggal\s*\n\s*(?P<date>[^\n]+\n\s*Jam\s*\n\s*[^\n]+)\n.*?Nominal Transaksi\s*\n\s*Rp\s*(?P<amount>[\d.,]+)'''
-
-# ---------- BRI (BRImo) ----------
-[[rule]]
-provider = "bri"
-sender = "bri.co.id"
-default_type = "debit"
-body_regex = '''(?si)Tanggal:\s*(?P<date>[^\n]+)\n.*?Tujuan:\s*(?P<merchant>[^\n]+?)\s*\n.*?Total:\s*Rp\s*(?P<amount>[\d.,]+)'''
-
-[[rule]]
-provider = "bri"
-sender = "bri.co.id"
-default_type = "credit"
-body_regex = '''(?si)Tanggal:\s*(?P<date>[^\n]+)\n.*?Sumber:\s*(?P<merchant>[^\n]+?)\s*\n.*?Nominal:\s*Rp\s*(?P<amount>[\d.,]+)'''
-
-# ---------- Jenius ----------
+# ---------- Jenius (kartu kredit) ----------
+# Total: "IDR 631,440.00" atau mata uang asing "SGD 1.38".
+# Tanggal: "21 NOV 2026 15:25:30 WIB" (kartu) atau "11/11/2026 17:30:36" (QRIS).
 [[rule]]
 provider = "jenius"
-sender = "jenius.com"
+sender = "jenius_noreply@smbci.com"
+subject_pattern = '''(?i)^Credit Card (QRIS )?Transaction Notification$'''
+search_subject = "Transaction Notification"
 default_type = "debit"
-body_regex = '''(?si)Kartu Debit Jenius di (?P<merchant>.+?) sebesar Rp\s*(?P<amount>[\d.,]+) pada (?P<date>[^\n]+)'''
+body_regex = '''(?s)Merchant:\s*(?P<merchant>[^\n]+?)\s*\nTransaction date & time:\s*(?P<date>[^\n]+)\nTotal:\s*(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
 
+# Pembatalan / refund: subjek "Your Jenius 437896******1234 transaction has been cancelled".
+# Body sama dengan notifikasi transaksi, tetapi "Merchant: Refund"; tanggal dan nominal milik
+# transaksi semula. Dicatat sebagai credit sehingga mengurangi estimasi tagihan kartu.
 [[rule]]
 provider = "jenius"
-sender = "jenius.com"
+sender = "jenius_noreply@smbci.com"
+subject_pattern = '''(?i)^Your Jenius \S+ transaction has been cancell?ed$'''
+search_subject = "transaction has been cancelled"
+default_type = "credit"
+body_regex = '''(?s)Merchant:\s*(?P<merchant>[^\n]+?)\s*\nTransaction date & time:\s*(?P<date>[^\n]+)\nTotal:\s*(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
+
+# ---------- Krom ----------
+# Tanggal: "21 November 2026, 12.35" (transfer) atau "18-11-2026 11:16 (WIB)" (QRIS).
+[[rule]]
+provider = "krom"
+sender = "noreply@krom.id"
+subject_pattern = '''(?i)^Transfer Berhasil$'''
+search_subject = "Transfer Berhasil"
 default_type = "debit"
-body_regex = '''(?si)mengirim uang sebesar Rp\s*(?P<amount>[\d.,]+) ke (?P<merchant>.+?) pada (?P<date>[^\n]+)'''
+category = "Transfer"
+body_regex = '''(?s)Tanggal & Waktu:\s*(?P<date>[^\n]+)\n.*?\nKe:\s*(?P<merchant>[^\n•]+?)\s*(?:•|\n).*?\nJumlah:\s*Rp\s*(?P<amount>[\d.,]+)'''
 
 [[rule]]
-provider = "jenius"
-sender = "jenius.com"
-default_type = "credit"
-body_regex = '''(?si)menerima uang sebesar Rp\s*(?P<amount>[\d.,]+) dari (?P<merchant>.+?) pada (?P<date>[^\n]+)'''
-
-# ---------- GoPay ----------
-[[rule]]
-provider = "gopay"
-sender = "gopay.co.id"
+provider = "krom"
+sender = "noreply@krom.id"
+subject_pattern = '''(?i)^Transaksi QRIS Berhasil$'''
+search_subject = "Transaksi QRIS Berhasil"
 default_type = "debit"
-body_regex = '''(?si)(?:membayar|mengirim) Rp\s*(?P<amount>[\d.,]+) ke (?P<merchant>.+?) pakai GoPay.*?Waktu:\s*(?P<date>[^\n]+)'''
+body_regex = '''(?s)Tanggal & Waktu:\s*(?P<date>[^\n]+)\n.*?\nMerchant:\s*(?P<merchant>[^\n]+?)\s*\nJumlah:\s*Rp\s*(?P<amount>[\d.,]+)'''
 
-[[rule]]
-provider = "gopay"
-sender = "gopay.co.id"
-default_type = "credit"
-body_regex = '''(?si)Top up GoPay sebesar Rp\s*(?P<amount>[\d.,]+) dari (?P<merchant>.+?) berhasil.*?Waktu:\s*(?P<date>[^\n]+)'''
+# ---------- BCA (myBCA "Internet Transaction Journal") ----------
+# Dua bahasa (Successful/Berhasil, Transaction Date/Tanggal Transaksi, ...). Setiap field
+# berbentuk "Label\n:\nNilai". Hanya status Successful/Berhasil yang dicatat; transaksi
+# gagal dan email pendaftaran rekening masuk "gagal diproses". Nominal: total yang
+# terpotong (termasuk biaya admin) bila email menyebutkannya.
 
+# QRIS
 [[rule]]
-provider = "gopay"
-sender = "gopay.co.id"
-default_type = "credit"
-body_regex = '''(?si)menerima Rp\s*(?P<amount>[\d.,]+) dari (?P<merchant>.+?) di GoPay.*?Waktu:\s*(?P<date>[^\n]+)'''
-
-# ---------- OVO ----------
-[[rule]]
-provider = "ovo"
-sender = "ovo.id"
+provider = "bca"
+sender = "bca@bca.co.id"
+subject_pattern = '''(?i)^Internet Transaction Journal$'''
+search_subject = "Internet Transaction Journal"
 default_type = "debit"
-body_regex = '''(?si)Nama Merchant\s*\n\s*(?P<merchant>[^\n]+?)\s*\n.*?Tanggal & Waktu\s*\n\s*(?P<date>[^\n]+)\n.*?Total Pembayaran\s*\n\s*Rp\s*(?P<amount>[\d.,]+)'''
+priority = 10
+body_regex = '''(?s)Status\n:\n(?:Successful|Berhasil)\n.*?(?:Transaction Date|Tanggal Transaksi)\n:\n(?P<date>[^\n]+)\n.*?(?:Transaction Type|Transfer Type|Jenis Transaksi|Jenis Transfer)\n:\n(?:QRIS Payment|Pembayaran QRIS)\n.*?(?:Payment to|Pembayaran [Kk]e)\n:\n(?P<merchant>[^\n]+)\n.*?(?:Total Payment|Total Bayar)\n:\n(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
 
+# Virtual Account: merchant = nama perusahaan/produk
 [[rule]]
-provider = "ovo"
-sender = "ovo.id"
-default_type = "credit"
-body_regex = '''(?si)Metode\s*\n\s*(?P<merchant>[^\n]+?)\s*\n.*?Tanggal & Waktu\s*\n\s*(?P<date>[^\n]+)\n.*?Jumlah Top Up\s*\n\s*Rp\s*(?P<amount>[\d.,]+)'''
-
-# ---------- DANA ----------
-[[rule]]
-provider = "dana"
-sender = "dana.id"
+provider = "bca"
+sender = "bca@bca.co.id"
+subject_pattern = '''(?i)^Internet Transaction Journal$'''
+search_subject = "Internet Transaction Journal"
 default_type = "debit"
-body_regex = '''(?si)berhasil membayar Rp\s*(?P<amount>[\d.,]+) ke (?P<merchant>[^\n]+?)\.\s*\n.*?Tanggal:\s*(?P<date>[^\n]+)'''
+priority = 10
+body_regex = '''(?s)Status\n:\n(?:Successful|Berhasil)\n.*?(?:Transaction Date|Tanggal Transaksi)\n:\n(?P<date>[^\n]+)\n.*?(?:Transaction Type|Transfer Type|Jenis Transaksi|Jenis Transfer)\n:\n(?:Transfer to|Transfer ke) BCA Virtual Account\n.*?(?:Company/Product Name|Nama Perusahaan/Produk)\n:\n(?P<merchant>[^\n]+)\n(?:.*?(?:Total Payment|Total Bayar)|.*?(?:Bill Total|Total Tagihan|Nominal Bayar))\n:\n(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
 
+# Transfer QRIS (ke merchant/e-wallet lewat QRIS)
 [[rule]]
-provider = "dana"
-sender = "dana.id"
-default_type = "credit"
-body_regex = '''(?si)menerima Rp\s*(?P<amount>[\d.,]+) dari (?P<merchant>[^\n]+?)\.\s*\n.*?Tanggal:\s*(?P<date>[^\n]+)'''
-
-[[rule]]
-provider = "dana"
-sender = "dana.id"
-default_type = "credit"
-body_regex = '''(?si)Top Up saldo DANA sebesar Rp\s*(?P<amount>[\d.,]+) melalui (?P<merchant>.+?) berhasil.*?Tanggal:\s*(?P<date>[^\n]+)'''
-
-# ---------- ShopeePay ----------
-[[rule]]
-provider = "shopeepay"
-sender = "shopee.co.id"
+provider = "bca"
+sender = "bca@bca.co.id"
+subject_pattern = '''(?i)^Internet Transaction Journal$'''
+search_subject = "Internet Transaction Journal"
 default_type = "debit"
-body_regex = '''(?si)Merchant:\s*(?P<merchant>[^\n]+?)\s*\n.*?Total Pembayaran:\s*Rp\s*(?P<amount>[\d.,]+).*?Waktu Transaksi:\s*(?P<date>[^\n]+)'''
+priority = 10
+body_regex = '''(?s)Status\n:\n(?:Successful|Berhasil)\n.*?(?:Transaction Date|Tanggal Transaksi)\n:\n(?P<date>[^\n]+)\n.*?(?:Transaction Type|Transfer Type|Jenis Transaksi|Jenis Transfer)\n:\n(?:Transfer QRIS|QRIS Transfer)\n.*?(?:Nama Penerima|Beneficiary Name)\n:\n(?P<merchant>[^\n]+)\n(?:.*?Total Transfer|.*?Nominal)\n:\n(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
 
+# Top-up e-wallet (DANA, GO-PAY, OVO, ...)
 [[rule]]
-provider = "shopeepay"
-sender = "shopee.co.id"
-default_type = "credit"
-body_regex = '''(?si)Isi Saldo.*?Metode:\s*(?P<merchant>[^\n]+?)\s*\n.*?Jumlah:\s*Rp\s*(?P<amount>[\d.,]+).*?Waktu Transaksi:\s*(?P<date>[^\n]+)'''
+provider = "bca"
+sender = "bca@bca.co.id"
+subject_pattern = '''(?i)^Internet Transaction Journal$'''
+search_subject = "Internet Transaction Journal"
+default_type = "debit"
+priority = 10
+category = "Top Up"
+body_regex = '''(?s)Status\n:\n(?:Successful|Berhasil)\n.*?(?:Transaction Date|Tanggal Transaksi)\n:\n(?P<date>[^\n]+)\n.*?(?:Transaction Type|Transfer Type|Jenis Transaksi|Jenis Transfer)\n:\n(?P<merchant>e-Wallet - [^\n]+)\n.*?(?:Total Payment|Total Bayar)\n:\n(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
 
+# Top-up Flazz
 [[rule]]
-provider = "shopeepay"
-sender = "shopee.co.id"
-default_type = "credit"
-body_regex = '''(?si)Pengembalian Dana.*?Merchant:\s*(?P<merchant>[^\n]+?)\s*\n.*?Jumlah Pengembalian:\s*Rp\s*(?P<amount>[\d.,]+).*?Waktu Transaksi:\s*(?P<date>[^\n]+)'''
+provider = "bca"
+sender = "bca@bca.co.id"
+subject_pattern = '''(?i)^Internet Transaction Journal$'''
+search_subject = "Internet Transaction Journal"
+default_type = "debit"
+priority = 10
+category = "Top Up"
+body_regex = '''(?s)Status\n:\n(?:Successful|Berhasil)\n.*?(?:Transaction Date|Tanggal Transaksi)\n:\n(?P<date>[^\n]+)\n.*?(?:Transaction Type|Transfer Type|Jenis Transaksi|Jenis Transfer)\n:\n(?P<merchant>Flazz Top Up|Top Up Flazz)\n.*?(?:Top Up Amount|Nominal Top Up|Total Payment|Total Bayar)\n:\n(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
 
-# ---------- Fallback generik ----------
-# Tanpa merchant dan tanggal; type ditebak dari kata kunci subject + body.
+# Transfer ke rekening BCA / bank lain
+[[rule]]
+provider = "bca"
+sender = "bca@bca.co.id"
+subject_pattern = '''(?i)^Internet Transaction Journal$'''
+search_subject = "Internet Transaction Journal"
+default_type = "debit"
+priority = 5
+category = "Transfer"
+body_regex = '''(?s)Status\n:\n(?:Successful|Berhasil)\n.*?(?:Transaction Date|Tanggal Transaksi)\n:\n(?P<date>[^\n]+)\n.*?(?:Transaction Type|Transfer Type|Jenis Transaksi|Jenis Transfer)\n:\n(?:Transfer to|Transfer ke) [^\n]+\n.*?(?:Beneficiary Name|Nama Penerima)\n:\n(?P<merchant>[^\n]+)\n.*?(?:Transfer Amount|Nominal Tujuan|Nominal|Amount)\n:\n(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
+
+# Pembayaran tagihan lain (kartu kredit, Telkom, ...): merchant = jenis transaksi
+[[rule]]
+provider = "bca"
+sender = "bca@bca.co.id"
+subject_pattern = '''(?i)^Internet Transaction Journal$'''
+search_subject = "Internet Transaction Journal"
+default_type = "debit"
+priority = 0
+category = "Tagihan"
+body_regex = '''(?s)Status\n:\n(?:Successful|Berhasil)\n.*?(?:Transaction Date|Tanggal Transaksi)\n:\n(?P<date>[^\n]+)\n.*?(?:Transaction Type|Transfer Type|Jenis Transaksi|Jenis Transfer)\n:\n(?P<merchant>[^\n]+)\n.*?(?:Total Payment|Total Bayar)\n:\n(?P<currency>[A-Z]{3})\s*(?P<amount>[\d.,]+)'''
+
+# ---------- Templat untuk sender tambahan user ----------
+# Tidak dipakai saat sinkron; POST /senders menyalin subject_pattern + body_regex ini.
 [[rule]]
 provider = "generic"
 sender = ""
+enabled = false
 priority = -100
-subject_pattern = '''(?i)transaksi|pembayaran|transfer|top.?up|berhasil|dana masuk|debit|kredit|payment|receipt'''
+subject_pattern = '''(?i)transaksi|pembayaran|transfer|top.?up|berhasil|dana masuk|debit|kredit|payment|receipt|transaction'''
 body_regex = '''(?i)(?:Rp\.?|IDR)\s*(?P<amount>\d[\d.,]*)'''

@@ -1,10 +1,10 @@
 const TZ = "Asia/Jakarta";
 
-/** Nominal dalam sen -> "Rp 12.500" / "Rp 12.500,50". */
-export function rupiah(minor: number): string {
+/** Nominal dalam sen -> "Rp 12.500" / "Rp 12.500,50"; mata uang lain mis. "SGD 1,38". */
+export function rupiah(minor: number, currency = "IDR"): string {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
-    currency: "IDR",
+    currency,
     minimumFractionDigits: minor % 100 ? 2 : 0,
     maximumFractionDigits: 2,
   }).format(minor / 100);
@@ -19,6 +19,11 @@ export function dateTime(iso: string): string {
   return new Intl.DateTimeFormat("id-ID", { timeZone: TZ, dateStyle: "medium", timeStyle: "short" }).format(
     new Date(iso),
   );
+}
+
+/** "2026-11-25" -> "25 Nov" */
+export function dayMonth(date: string): string {
+  return new Intl.DateTimeFormat("id-ID", { timeZone: "UTC", day: "numeric", month: "short" }).format(new Date(date));
 }
 
 /** Bulan berjalan di Jakarta sebagai "YYYY-MM". */

@@ -14,6 +14,8 @@ export type Transaction = {
   category_color: string | null;
   category_locked: boolean;
   source: "gmail" | "manual";
+  /** Metode pembayaran: bca | jenius | krom | custom | manual */
+  provider: string;
   raw_subject: string | null;
 };
 
@@ -36,6 +38,19 @@ export type Summary = {
   total_income: number;
   by_category: { category_id: string | null; name: string; color: string | null; total: number }[];
   by_day: { date: string; expense: number; income: number }[];
+};
+
+/** Estimasi tagihan kartu kredit untuk siklus berjalan. */
+export type CardBill = {
+  provider: string;
+  /** YYYY-MM-DD, awal siklus (inklusif) */
+  from: string;
+  /** YYYY-MM-DD, tanggal tagihan terbit */
+  statement_date: string;
+  /** sen, debit − refund, hanya IDR */
+  total: number;
+  count: number;
+  foreign_count: number;
 };
 
 export type MonthTotal = { month: string; expense: number; income: number };
