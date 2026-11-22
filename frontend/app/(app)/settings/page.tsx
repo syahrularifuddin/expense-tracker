@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { api } from "@/lib/api";
-import { dateTime } from "@/lib/format";
+import { categoryColor, dateTime } from "@/lib/format";
 import { useCategories, useSync } from "@/lib/hooks";
 import type { Page, Sender, UnparsedEmail } from "@/lib/types";
 
@@ -109,7 +109,7 @@ function CategoriesCard() {
         <ul className="flex flex-wrap gap-1.5">
           {categories.data?.map((c) => (
             <li key={c.id} className="flex h-8 items-center gap-2 rounded-full bg-secondary pr-1 pl-3">
-              <span className="size-2 rounded-full" style={{ background: c.color ?? "var(--muted-foreground)" }} aria-hidden />
+              <span className="size-2 rounded-full" style={{ background: categoryColor(c.name, c.color) ?? "var(--muted-foreground)" }} aria-hidden />
               {c.name}
               {c.is_default ? (
                 <span className="w-1" />

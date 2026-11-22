@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Meter } from "@/components/bits";
-import { monthLabel, rupiah, rupiahCompact } from "@/lib/format";
+import { categoryColor, monthLabel, rupiah, rupiahCompact } from "@/lib/format";
 import type { MonthTotal, Summary } from "@/lib/types";
 
 const tooltip = {
@@ -35,7 +35,7 @@ export function CategoryBars({ data, limit }: { data: Summary["by_category"]; li
           <Meter
             label={`Porsi ${c.name}`}
             value={c.total / total}
-            color={c.category_id ? (c.color ?? "var(--chart-2)") : "var(--chart-4)"}
+            color={c.category_id ? (categoryColor(c.name, c.color) ?? "var(--chart-2)") : "var(--chart-4)"}
           />
         </li>
       ))}

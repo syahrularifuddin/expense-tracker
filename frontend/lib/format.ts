@@ -52,3 +52,20 @@ export function nowJakartaInput(): string {
 export function jakartaInputToIso(value: string): string {
   return new Date(`${value}:00+07:00`).toISOString();
 }
+
+// Gading palette for the built-in categories; overrides the color stored in the DB.
+// ponytail: matched by name, so a custom category named like a default gets its color too.
+const CATEGORY_COLORS: Record<string, string> = {
+  "Makanan & Minuman": "#C9822E",
+  Transportasi: "#3B82C4",
+  Belanja: "#7C6CD9",
+  Tagihan: "#D9636B",
+  Hiburan: "#A89CF0",
+  Kesehatan: "#5CC7B8",
+  Transfer: "#7A6F64",
+  "Top Up": "#A89C8E",
+  Pemasukan: "#2F9E8F",
+  Lainnya: "#A89C8E",
+};
+
+export const categoryColor = (name: string, color: string | null) => CATEGORY_COLORS[name] ?? color;
