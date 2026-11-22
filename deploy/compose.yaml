@@ -5,10 +5,14 @@
 # and `expense-api` over the shared `edge` Docker network
 # (https://expense.halosyahrul.com, /api/v1/* to the API, the rest to the web app).
 #
+# Services are named expense-* on purpose: compose registers each service name as a DNS
+# name on every network it joins, so a plain `web` here would answer for halosyahrul.com's
+# `web` on the shared `edge` network and hijack the main site.
+#
 # Secrets come from .env in the deploy dir on the VPS (never in git); template and
 # generate commands in deploy/.env.example. Database: Neon (managed Postgres), not a container.
 services:
-  api:
+  expense-api:
     image: ghcr.io/syahrularifuddin/expense-tracker/api:latest
     environment:
       DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL in .env}
@@ -23,10 +27,7 @@ services:
       timeout: 5s
       retries: 3
       start_period: 15s
-    networks:
-      default:
-      edge:
-        aliases: [expense-api]
+    networks: [default, edge]
     restart: unless-stopped
     logging: &logging
       driver: json-file
@@ -34,7 +35,7 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  web:
+  expense-web:
     image: ghcr.io/syahrularifuddin/expense-tracker/web:latest
     environment:
       AUTH_SECRET: ${AUTH_SECRET:?set AUTH_SECRET in .env}
@@ -43,9 +44,9 @@ services:
       AUTH_TRUST_HOST: "true"
       AUTH_GOOGLE_ID: ${GOOGLE_CLIENT_ID}
       AUTH_GOOGLE_SECRET: ${GOOGLE_CLIENT_SECRET}
-      BACKEND_URL: http://api:8080
+      BACKEND_URL: http://expense-api:8080
     depends_on:
-      api:
+      expense-api:
         condition: service_healthy
     healthcheck:
       test:
@@ -59,10 +60,7 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
-    networks:
-      default:
-      edge:
-        aliases: [expense-web]
+    networks: [default, edge]
     restart: unless-stopped
     logging: *logging
 
