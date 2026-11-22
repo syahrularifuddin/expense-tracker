@@ -1,5 +1,5 @@
 import { cn } from "cn";
-import type { LucideIcon } from "lucide-react";
+import { Mail, Wallet, type LucideIcon } from "lucide-react";
 import { rupiah } from "@/lib/format";
 import type { SyncStatus, Transaction } from "@/lib/types";
 
@@ -47,12 +47,81 @@ export function SyncLozenge({ status }: { status: SyncStatus["status"] }) {
   );
 }
 
+/** `logo` = ikon resmi di public/logos (dari situs bank); tanpa logo memakai `icon`. */
+type Method = { label: string; logo?: string; icon?: LucideIcon; tone?: "neutral" | "info" };
+
+const METHODS: Record<string, Method> = {
+  bca: { label: "BCA", logo: "/logos/bca.png" },
+  jenius: { label: "Jenius", logo: "/logos/jenius.png" },
+  krom: { label: "Krom", logo: "/logos/krom.png" },
+  manual: { label: "Manual", icon: Wallet, tone: "neutral" },
+  custom: { label: "Lainnya", icon: Mail, tone: "info" },
+};
+
+/** Logo kecil + nama metode pembayaran. Provider tak dikenal tampil sebagai "Lainnya". */
+export function MethodBadge({ provider }: { provider: string }) {
+  const m = METHODS[provider] ?? METHODS.custom;
+  return (
+    <span className="inline-flex items-center gap-2 whitespace-nowrap">
+      {m.logo ? (
+        // eslint-disable-next-line @next/next/no-img-element -- ikon statis 24px, tidak perlu optimasi
+        <img src={m.logo} alt="" width={24} height={24} className="size-6 shrink-0 rounded-md" />
+      ) : (
+        <span
+          aria-hidden
+          className="grid size-6 shrink-0 place-items-center rounded-md"
+          style={{ background: `var(--loz-${m.tone}-bg)`, color: `var(--loz-${m.tone}-fg)` }}
+        >
+          {m.icon && <m.icon className="size-3.5" />}
+        </span>
+      )}
+      {m.label}
+    </span>
+  );
+}
+
+/** Chip pilih-satu metode pembayaran. `value` "" = semua. */
+export function MethodFilter({ value, onChange }: { value: string; onChange: (provider: string) => void }) {
+  const chip = (id: string, content: React.ReactNode) => (
+    <button
+      key={id}
+      type="button"
+      aria-pressed={value === id}
+      onClick={() => onChange(id)}
+      className={cn(
+        "inline-flex h-9 items-center rounded-full border px-3 font-medium transition-colors",
+        value === id
+          ? "border-brand bg-[var(--loz-info-bg)] text-foreground"
+          : "border-input text-muted-foreground hover:bg-muted hover:text-foreground",
+      )}
+    >
+      {content}
+    </button>
+  );
+  return (
+    <div role="group" aria-label="Metode pembayaran" className="flex flex-wrap gap-2">
+      {chip("", "Semua metode")}
+      {Object.keys(METHODS).map((id) => chip(id, <MethodBadge provider={id} />))}
+    </div>
+  );
+}
+
 /** Tanda +/− menyertai warna agar debit/credit tidak hanya dibedakan warna. */
-export function Money({ minor, type, className }: { minor: number; type?: Transaction["type"]; className?: string }) {
+export function Money({
+  minor,
+  type,
+  currency,
+  className,
+}: {
+  minor: number;
+  type?: Transaction["type"];
+  currency?: string;
+  className?: string;
+}) {
   return (
     <span className={cn("tabular-nums", type === "credit" && "text-[var(--loz-success-fg)]", className)}>
       {type === "credit" ? "+" : type === "debit" ? "−" : ""}
-      {rupiah(minor)}
+      {rupiah(minor, currency)}
     </span>
   );
 }

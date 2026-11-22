@@ -29,8 +29,9 @@ pub async fn seed_global_rules(pool: &PgPool, configs: &[RuleConfig]) -> Result<
         .await?;
     for c in configs {
         sqlx::query(
-            "INSERT INTO parser_rules (provider, sender, subject_pattern, body_regex, default_type, priority)
-             VALUES ($1, $2, $3, $4, $5, $6)",
+            "INSERT INTO parser_rules (provider, sender, subject_pattern, body_regex, default_type,
+                                       priority, enabled, search_subject, category)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
         )
         .bind(&c.provider)
         .bind(c.sender.to_lowercase())
@@ -38,6 +39,9 @@ pub async fn seed_global_rules(pool: &PgPool, configs: &[RuleConfig]) -> Result<
         .bind(&c.body_regex)
         .bind(c.default_type.map(|t| t.as_str()))
         .bind(c.priority)
+        .bind(c.enabled)
+        .bind(&c.search_subject)
+        .bind(&c.category)
         .execute(&mut *tx)
         .await?;
     }
@@ -132,6 +136,7 @@ async fn run(
             .fetch_all(&state.pool)
             .await?;
 
+    let rules = parser::compile_rules(configs.clone())?;
     let (mut emails, new_history, shift) = if state.cfg.mock_gmail {
         let emails: Vec<RawEmail> = serde_json::from_str(&std::fs::read_to_string(FIXTURES)?)?;
         // Tanggal fixture statis; geser (hari utuh) agar yang terbaru jatuh kemarin
@@ -144,19 +149,33 @@ async fn run(
             .await?
             .ok_or(gmail::NeedsReauth)?;
         let token = gmail::access_token(state, &refresh).await?;
-        let mut senders: Vec<String> =
-            configs.iter().map(|c| c.sender.clone()).filter(|s| !s.is_empty()).collect();
-        senders.sort();
-        senders.dedup();
-        let (emails, new_history) = gmail::fetch(state, &token, &senders, history_id).await?;
+        let mut searches: Vec<(String, Option<String>)> = configs
+            .iter()
+            .filter(|c| !c.sender.is_empty())
+            .map(|c| (c.sender.clone(), c.search_subject.clone()))
+            .collect();
+        searches.sort();
+        searches.dedup();
+        let query = gmail::search_query(&searches);
+        let wanted = |from: &str, subject: &str| parser::claims(&rules, from, subject);
+        // Email "gagal diproses" sengaja tidak ikut: diambil lagi agar aturan yang diperbaiki bisa mencobanya.
+        let known = sqlx::query_scalar(
+            "SELECT gmail_message_id FROM transactions WHERE user_id = $1 AND gmail_message_id IS NOT NULL",
+        )
+        .bind(user_id)
+        .fetch_all(&state.pool)
+        .await?
+        .into_iter()
+        .collect();
+        let (emails, new_history) = gmail::fetch(state, &token, &query, wanted, history_id, &known).await?;
         (emails, new_history, Duration::zero())
     };
+    // Hanya email yang pengirim + subjeknya cocok aturan; promo/OTP/info akun dilewati.
     emails.retain(|e| {
         let from = e.from.to_lowercase();
-        !disabled.iter().any(|s| from.contains(s.as_str()))
+        !disabled.iter().any(|s| from.contains(s.as_str())) && parser::claims(&rules, &e.from, &e.subject)
     });
 
-    let rules = parser::compile_rules(configs)?;
     let mut inserted = 0;
     for e in &emails {
         let received_at = e.received_at + shift;
@@ -170,13 +189,15 @@ async fn run(
                 let occurred_at =
                     if p.occurred_at == received_at { received_at } else { p.occurred_at + shift };
                 let done = sqlx::query(
-                    "INSERT INTO transactions (user_id, occurred_at, amount_minor, type, merchant,
-                                               category_id, source, gmail_message_id, raw_subject)
-                     VALUES ($1, $2, $3, $4, $5,
-                             (SELECT category_id FROM category_rules
-                              WHERE (user_id IS NULL OR user_id = $1) AND $5 ILIKE '%' || keyword || '%'
-                              ORDER BY user_id NULLS LAST, length(keyword) DESC LIMIT 1),
-                             'gmail', $6, $7)
+                    "INSERT INTO transactions (user_id, occurred_at, amount_minor, currency, type, merchant,
+                                               category_id, source, gmail_message_id, raw_subject, provider)
+                     VALUES ($1, $2, $3, $8, $4, $5,
+                             COALESCE(
+                               (SELECT id FROM categories WHERE user_id IS NULL AND name = $9),
+                               (SELECT category_id FROM category_rules
+                                WHERE (user_id IS NULL OR user_id = $1) AND $5 ILIKE '%' || keyword || '%'
+                                ORDER BY user_id NULLS LAST, length(keyword) DESC LIMIT 1)),
+                             'gmail', $6, $7, $10)
                      ON CONFLICT (user_id, gmail_message_id) DO NOTHING",
                 )
                 .bind(user_id)
@@ -186,6 +207,9 @@ async fn run(
                 .bind(&p.merchant)
                 .bind(&e.id)
                 .bind(&e.subject)
+                .bind(&p.currency)
+                .bind(&p.category)
+                .bind(&p.provider)
                 .execute(&state.pool)
                 .await?;
                 inserted += done.rows_affected() as usize;
@@ -221,9 +245,9 @@ async fn run(
 
 /// Aturan aktif untuk user: global + miliknya, tanpa sender yang ia matikan.
 async fn load_rule_configs(pool: &PgPool, user_id: Uuid) -> Result<Vec<RuleConfig>, BoxError> {
-    type Row = (String, String, Option<String>, String, Option<String>, i32);
+    type Row = (String, String, Option<String>, String, Option<String>, i32, Option<String>, Option<String>);
     let rows: Vec<Row> = sqlx::query_as(
-        "SELECT provider, sender, subject_pattern, body_regex, default_type, priority
+        "SELECT provider, sender, subject_pattern, body_regex, default_type, priority, search_subject, category
          FROM parser_rules r
          WHERE enabled AND (user_id IS NULL OR user_id = $1)
            AND NOT EXISTS (SELECT 1 FROM disabled_senders d
@@ -235,13 +259,18 @@ async fn load_rule_configs(pool: &PgPool, user_id: Uuid) -> Result<Vec<RuleConfi
     .await?;
     Ok(rows
         .into_iter()
-        .map(|(provider, sender, subject_pattern, body_regex, default_type, priority)| RuleConfig {
-            provider,
-            sender,
-            subject_pattern,
-            body_regex,
-            default_type: default_type.as_deref().and_then(parser::TxType::from_db),
-            priority,
+        .map(|(provider, sender, subject_pattern, body_regex, default_type, priority, search_subject, category)| {
+            RuleConfig {
+                provider,
+                sender,
+                subject_pattern,
+                body_regex,
+                default_type: default_type.as_deref().and_then(parser::TxType::from_db),
+                priority,
+                enabled: true,
+                search_subject,
+                category,
+            }
         })
         .collect())
 }

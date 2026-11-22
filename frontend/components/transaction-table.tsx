@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
-import { Lozenge, Money, TypeLozenge } from "@/components/bits";
+import { MethodBadge, Money, TypeLozenge } from "@/components/bits";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { api } from "@/lib/api";
@@ -33,7 +33,7 @@ export function TransactionTable({ items, editable = false }: { items: Transacti
     <Table>
       <TableHeader>
         <TableRow className="hover:bg-transparent">
-          {["Tanggal", "Merchant", "Kategori", "Jenis", "Sumber"].map((h) => (
+          {["Tanggal", "Merchant", "Kategori", "Jenis", "Metode"].map((h) => (
             <TableHead key={h}>{h}</TableHead>
           ))}
           <TableHead className="text-right">Nominal</TableHead>
@@ -71,12 +71,10 @@ export function TransactionTable({ items, editable = false }: { items: Transacti
               <TypeLozenge type={t.type} />
             </TableCell>
             <TableCell>
-              <Lozenge tone={t.source === "gmail" ? "info" : "neutral"}>
-                {t.source === "gmail" ? "Gmail" : "Manual"}
-              </Lozenge>
+              <MethodBadge provider={t.provider} />
             </TableCell>
             <TableCell className="text-right font-semibold">
-              <Money minor={t.amount_minor} type={t.type} />
+              <Money minor={t.amount_minor} type={t.type} currency={t.currency} />
             </TableCell>
             {editable && (
               <TableCell>

@@ -34,14 +34,16 @@ Kamu adalah senior fullstack engineer. Bangun aplikasi **Expense Tracker** yang 
 ## Ingest Email → Transaksi
 
 - **Background worker** (tokio task, polling tiap 5 menit per user, dengan jitter; backoff eksponensial pada HTTP 429/5xx):
-  - Sinkron pertama: `users.messages.list` dengan query `from:(a OR b ...) newer_than:90d`, lalu simpan `historyId` terbaru.
-  - Sinkron berikutnya: `users.history.list` dengan `startHistoryId` + `historyTypes=messageAdded`; pesan yang sender-nya tidak ada di daftar dilewati. Jika Gmail membalas **HTTP 404** (historyId kedaluwarsa/invalid), fallback ke full search lalu reset `historyId`.
+  - Sinkron pertama (scan ke belakang, tanpa batas tanggal, maks 5000 email): `users.messages.list` dengan query `(from:a subject:"x") OR ...` dari pasangan pengirim + `search_subject` tiap aturan, lalu simpan `historyId` terbaru.
+  - Sinkron berikutnya: `users.history.list` dengan `startHistoryId` + `historyTypes=messageAdded`; header (`format=metadata`) dicek dulu; hanya email yang pengirim + subjeknya cocok aturan yang diambil isinya. Jika Gmail membalas **HTTP 404** (historyId kedaluwarsa/invalid), fallback ke full search lalu reset `historyId`.
   - Ambil isi dengan `users.messages.get?format=full`: decode base64url, pilih part `text/plain`; jika hanya ada `text/html`, buang tag menjadi teks sebelum diparse.
+- **Hanya email transaksi**: email dari pengirim terdaftar yang subjeknya tidak cocok aturan mana pun (promo, OTP, info akun) dilewati, tidak dicatat sebagai gagal parse.
 - **Daftar sender**: default berasal dari satu file konfigurasi (`backend/config/senders.toml`) yang di-seed sebagai aturan global (`parser_rules.user_id IS NULL`). User dapat menonaktifkan sender global atau menambah sender sendiri di settings.
 - **Parser berbasis aturan (rule engine)**:
-  - Tabel `parser_rules`: matcher (sender / pola subject) + regex dengan named capture groups: `amount`, `merchant`, `date`, `type`.
-  - Seed aturan untuk notifikasi umum bank & e-wallet Indonesia (BCA, Mandiri, BRI, Jenius, GoPay, OVO, DANA, ShopeePay) + 1 aturan generik fallback.
-  - Nominal format Indonesia: `Rp1.500.000`, `Rp 12.500,50`. Disimpan sebagai `amount_minor` BIGINT dalam **sen** (`Rp 12.500,50` → `1250050`, `Rp1.500.000` → `150000000`). Tidak memakai float.
+  - Tabel `parser_rules`: matcher (sender / pola subject) + regex dengan named capture groups: `amount`, `merchant`, `date`, `type`, `currency`; plus `search_subject` (query Gmail) dan `category` (kategori default aturan).
+  - Sumber v1, dari format email asli: **Jenius** kartu kredit (`jenius_noreply@smbci.com`: "Credit Card Transaction Notification", "Credit Card QRIS Transaction Notification"), **Krom** (`noreply@krom.id`: "Transfer Berhasil", "Transaksi QRIS Berhasil"), **BCA** myBCA (`bca@bca.co.id`: "Internet Transaction Journal"). Bank/e-wallet lain menyusul. Aturan `generic` hanya templat untuk sender tambahan user (tidak aktif saat sinkron).
+  - Mata uang: disimpan per transaksi (`IDR`, `SGD`, ...). Laporan hanya menjumlahkan IDR; transaksi non-IDR tampil dengan mata uangnya.
+  - Nominal format Indonesia dan Inggris: `Rp1.500.000`, `Rp 12.500,50`, `IDR 631,440.00`. Disimpan sebagai `amount_minor` BIGINT dalam **sen** (`Rp 12.500,50` → `1250050`, `Rp1.500.000` → `150000000`). Tidak memakai float.
   - Nilai `type` hanya `debit` atau `credit`. Top-up/penerimaan → `credit` (bukan pengeluaran). Jika regex tidak menangkap `type`, pakai `default_type` dari aturan.
   - Tanggal: parse dari body dengan zona Asia/Jakarta; jika tidak ada, pakai `internalDate` Gmail. Simpan sebagai `timestamptz` (UTC).
 - **Dedup**: unique constraint `(user_id, gmail_message_id)`; transaksi manual memakai `gmail_message_id = NULL` (tidak bentrok di Postgres).
@@ -120,7 +122,7 @@ Acuan visual: dashboard bergaya Apple-ish yang lembut — latar abu sangat muda,
 
 ## Kualitas & Verifikasi (syarat "selesai")
 
-1. **Unit test parser WAJIB**: ≥ 10 sampel subject/body email yang realistis (dianonimkan) untuk setiap provider yang di-seed, mencakup debit dan credit serta kedua format nominal; jalankan dengan `cargo test` — semua hijau.
+1. **Unit test parser WAJIB**: ≥ 10 sampel subject/body email yang meniru format asli (dianonimkan) untuk setiap provider yang di-seed, mencakup tiap jenis subjek dan format nominal; jalankan dengan `cargo test` — semua hijau. Aturan juga diukur pada email asli lokal lewat `tests/real_corpus.rs` (`CORPUS=... cargo test --test real_corpus -- --ignored`).
 2. **Mode dev tanpa kredensial Google**: env `MOCK_GMAIL=true` → worker membaca fixture email JSON dari `backend/fixtures/` alih-alih Gmail asli, dan login memakai `dev-login`, sehingga alur end-to-end bisa dites tanpa OAuth.
 3. `docker compose up` menghidupkan Postgres; backend & frontend bisa dijalankan dari langkah README.
 4. README berisi: setup Google Cloud Console (buat OAuth Client tipe Web, redirect URI `http://localhost:3000/api/auth/callback/google`, enable Gmail API, tambah test user), catatan bahwa `gmail.readonly` adalah *restricted scope* dan pada status "Testing" refresh token kedaluwarsa setelah 7 hari, `.env.example` lengkap (backend & frontend), cara run backend & frontend.

@@ -1,10 +1,10 @@
 const TZ = "Asia/Jakarta";
 
-/** Nominal dalam sen -> "Rp 12.500" / "Rp 12.500,50". */
-export function rupiah(minor: number): string {
+/** Nominal dalam sen -> "Rp 12.500" / "Rp 12.500,50"; mata uang lain mis. "SGD 1,38". */
+export function rupiah(minor: number, currency = "IDR"): string {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
-    currency: "IDR",
+    currency,
     minimumFractionDigits: minor % 100 ? 2 : 0,
     maximumFractionDigits: 2,
   }).format(minor / 100);
@@ -19,6 +19,16 @@ export function dateTime(iso: string): string {
   return new Intl.DateTimeFormat("id-ID", { timeZone: TZ, dateStyle: "medium", timeStyle: "short" }).format(
     new Date(iso),
   );
+}
+
+/** "2026-11-25" -> "25 Nov" */
+export function dayMonth(date: string): string {
+  return new Intl.DateTimeFormat("id-ID", { timeZone: "UTC", day: "numeric", month: "short" }).format(new Date(date));
+}
+
+/** "2026-11-25" -> "2026-11-24" */
+export function previousDay(date: string): string {
+  return new Date(Date.parse(`${date}T00:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
 }
 
 /** Bulan berjalan di Jakarta sebagai "YYYY-MM". */
@@ -42,3 +52,20 @@ export function nowJakartaInput(): string {
 export function jakartaInputToIso(value: string): string {
   return new Date(`${value}:00+07:00`).toISOString();
 }
+
+// Gading palette for the built-in categories; overrides the color stored in the DB.
+// ponytail: matched by name, so a custom category named like a default gets its color too.
+const CATEGORY_COLORS: Record<string, string> = {
+  "Makanan & Minuman": "#C9822E",
+  Transportasi: "#3B82C4",
+  Belanja: "#7C6CD9",
+  Tagihan: "#D9636B",
+  Hiburan: "#A89CF0",
+  Kesehatan: "#5CC7B8",
+  Transfer: "#7A6F64",
+  "Top Up": "#A89C8E",
+  Pemasukan: "#2F9E8F",
+  Lainnya: "#A89C8E",
+};
+
+export const categoryColor = (name: string, color: string | null) => CATEGORY_COLORS[name] ?? color;

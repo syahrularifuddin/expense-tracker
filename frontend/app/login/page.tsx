@@ -2,6 +2,9 @@ import { Wallet } from "lucide-react";
 import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 
+// Read AUTH_GOOGLE_ID / MOCK_GMAIL per request: the Docker image is built without them.
+export const dynamic = "force-dynamic";
+
 export default function LoginPage() {
   const google = !!process.env.AUTH_GOOGLE_ID;
   const mock = process.env.MOCK_GMAIL === "true";

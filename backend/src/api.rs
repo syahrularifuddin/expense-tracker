@@ -12,7 +12,7 @@ use axum::{
     http::StatusCode,
     routing::{get, patch, post},
 };
-use chrono::{DateTime, NaiveDate, Utc};
+use chrono::{DateTime, Datelike, FixedOffset, Months, NaiveDate, Utc};
 use serde::{Deserialize, Deserializer, Serialize};
 use sqlx::{FromRow, Postgres, QueryBuilder};
 use utoipa::{
@@ -44,6 +44,7 @@ pub fn router(state: AppState) -> Router {
         .route("/unparsed-emails/{id}", patch(update_unparsed))
         .route("/reports/summary", get(summary))
         .route("/reports/trends", get(trends))
+        .route("/reports/card-bills", get(card_bills))
         .route("/sync", post(trigger_sync))
         .route("/sync/status", get(sync_status));
 
@@ -62,7 +63,7 @@ pub fn router(state: AppState) -> Router {
         auth::disconnect_google, list_transactions, create_transaction, update_transaction,
         delete_transaction, list_categories, create_category, update_category, delete_category,
         list_senders, add_sender, toggle_sender, delete_sender, list_unparsed, update_unparsed,
-        summary, trends, trigger_sync, sync_status
+        summary, trends, card_bills, trigger_sync, sync_status
     ),
     modifiers(&BearerAuth)
 )]
@@ -138,12 +139,14 @@ pub struct Transaction {
     category_color: Option<String>,
     category_locked: bool,
     source: String,
+    /// Metode pembayaran: `bca`, `jenius`, `krom`, `custom`, atau `manual`.
+    provider: String,
     raw_subject: Option<String>,
 }
 
 const TX_SELECT: &str = "SELECT t.id, t.occurred_at, t.amount_minor, t.currency, t.type, t.merchant,
         t.description, t.category_id, c.name AS category_name, c.color AS category_color,
-        t.category_locked, t.source, t.raw_subject
+        t.category_locked, t.source, t.provider, t.raw_subject
     FROM transactions t LEFT JOIN categories c ON c.id = t.category_id";
 
 #[derive(Deserialize, IntoParams)]
@@ -156,6 +159,8 @@ pub struct TxQuery {
     category_id: Option<Uuid>,
     /// `gmail` atau `manual`.
     source: Option<String>,
+    /// Metode pembayaran: `bca`, `jenius`, `krom`, `custom`, atau `manual`.
+    provider: Option<String>,
     /// `debit` atau `credit`.
     r#type: Option<String>,
     /// Cari di merchant / deskripsi.
@@ -177,6 +182,9 @@ fn push_tx_filters(qb: &mut QueryBuilder<Postgres>, user_id: Uuid, f: &TxQuery) 
     }
     if let Some(s) = f.source.as_deref().filter(|s| !s.is_empty()) {
         qb.push(" AND t.source = ").push_bind(s.to_string());
+    }
+    if let Some(p) = f.provider.as_deref().filter(|s| !s.is_empty()) {
+        qb.push(" AND t.provider = ").push_bind(p.to_string());
     }
     if let Some(t) = f.r#type.as_deref().filter(|s| !s.is_empty()) {
         qb.push(" AND t.type = ").push_bind(t.to_string());
@@ -254,8 +262,8 @@ async fn create_transaction(
     check_category(&state, user_id, req.category_id).await?;
     let id: Uuid = sqlx::query_scalar(
         "INSERT INTO transactions (user_id, occurred_at, amount_minor, type, merchant, description,
-                                   category_id, category_locked, source)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $7 IS NOT NULL, 'manual') RETURNING id",
+                                   category_id, category_locked, source, provider)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $7 IS NOT NULL, 'manual', 'manual') RETURNING id",
     )
     .bind(user_id)
     .bind(req.occurred_at)
@@ -656,10 +664,13 @@ pub struct Summary {
 pub struct SummaryQuery {
     /// `YYYY-MM` (Asia/Jakarta). Default: bulan ini.
     month: Option<String>,
+    /// Metode pembayaran; kosong = semua.
+    provider: Option<String>,
 }
 
-/// Batas bulan dihitung di Asia/Jakarta. `$2` = tanggal 1 bulan itu.
-const IN_MONTH: &str = "t.user_id = $1
+/// Batas bulan dihitung di Asia/Jakarta. `$2` = tanggal 1 bulan itu, `$3` = provider (NULL = semua).
+/// Hanya IDR yang dijumlahkan (multi-currency di luar cakupan v1).
+const IN_MONTH: &str = "t.user_id = $1 AND t.currency = 'IDR' AND ($3::text IS NULL OR t.provider = $3)
     AND t.occurred_at >= ($2::date)::timestamp AT TIME ZONE 'Asia/Jakarta'
     AND t.occurred_at < ($2::date + interval '1 month') AT TIME ZONE 'Asia/Jakarta'";
 
@@ -679,6 +690,8 @@ async fn summary(
     let first = NaiveDate::parse_from_str(&format!("{month}-01"), "%Y-%m-%d")
         .map_err(|_| ApiError::bad_request("month harus berformat YYYY-MM"))?;
 
+    let provider = q.provider.filter(|p| !p.is_empty());
+
     let mut by_category = QueryBuilder::new(
         "SELECT c.id AS category_id, COALESCE(c.name, 'Tanpa kategori') AS name, c.color,
                 SUM(t.amount_minor)::bigint AS total
@@ -690,6 +703,7 @@ async fn summary(
         .build_query_as()
         .bind(user_id)
         .bind(first)
+        .bind(&provider)
         .fetch_all(&state.pool)
         .await?;
 
@@ -701,7 +715,7 @@ async fn summary(
     );
     by_day.push(IN_MONTH).push(" GROUP BY 1 ORDER BY 1");
     let by_day: Vec<DayTotal> =
-        by_day.build_query_as().bind(user_id).bind(first).fetch_all(&state.pool).await?;
+        by_day.build_query_as().bind(user_id).bind(first).bind(&provider).fetch_all(&state.pool).await?;
 
     Ok(Json(Summary {
         month,
@@ -744,7 +758,7 @@ async fn trends(
                 date_trunc('month', now() AT TIME ZONE 'Asia/Jakarta'),
                 interval '1 month') AS m
          LEFT JOIN transactions t
-           ON t.user_id = $1
+           ON t.user_id = $1 AND t.currency = 'IDR'
           AND date_trunc('month', t.occurred_at AT TIME ZONE 'Asia/Jakarta') = m
          GROUP BY m ORDER BY m",
     )
@@ -753,6 +767,74 @@ async fn trends(
     .fetch_all(&state.pool)
     .await?;
     Ok(Json(rows))
+}
+
+// ponytail: tanggal cetak tagihan per kartu ditulis di sini; pindahkan ke tabel + halaman
+// Pengaturan bila user perlu mengubahnya dari UI.
+const CARD_BILLING_DAYS: [(&str, u32); 1] = [("jenius", 25)];
+
+/// Siklus tagihan yang sedang berjalan: `(awal, tanggal cetak berikutnya)`. `day` 1-28.
+/// ponytail: transaksi pada tanggal cetak dihitung ke siklus berikutnya; bank bisa memotong
+/// sehari lebih awal/lambat, dan transaksi yang belum di-posting bisa bergeser siklus.
+fn billing_period(today: NaiveDate, day: u32) -> Option<(NaiveDate, NaiveDate)> {
+    let this_month = today.with_day(day)?;
+    let start = if today >= this_month { this_month } else { this_month.checked_sub_months(Months::new(1))? };
+    Some((start, start.checked_add_months(Months::new(1))?))
+}
+
+#[derive(Serialize, ToSchema)]
+pub struct CardBill {
+    provider: String,
+    /// Awal siklus (inklusif, Asia/Jakarta).
+    from: NaiveDate,
+    /// Tanggal tagihan terbit; transaksi sebelum tanggal ini dihitung.
+    statement_date: NaiveDate,
+    /// Debit dikurangi credit (refund) dalam siklus, sen, hanya IDR.
+    total: i64,
+    count: i64,
+    /// Transaksi mata uang asing dalam siklus; tidak ikut `total`.
+    foreign_count: i64,
+}
+
+/// Estimasi tagihan kartu kredit untuk siklus berjalan, dari notifikasi transaksi.
+#[utoipa::path(get, path = "/api/v1/reports/card-bills", tag = "reports", security(("bearer" = [])),
+    responses((status = 200, body = Vec<CardBill>)))]
+async fn card_bills(State(state): State<AppState>, AuthUser(user_id): AuthUser) -> ApiResult<Vec<CardBill>> {
+    let today = Utc::now().with_timezone(&FixedOffset::east_opt(7 * 3600).expect("offset valid")).date_naive();
+    let mut bills = Vec::new();
+    for (provider, day) in CARD_BILLING_DAYS {
+        let (from, statement_date) = billing_period(today, day).expect("day 1-28");
+        let (total, count, foreign_count): (i64, i64, i64) = sqlx::query_as(
+            "SELECT COALESCE(SUM(CASE type WHEN 'debit' THEN amount_minor ELSE -amount_minor END)
+                             FILTER (WHERE currency = 'IDR'), 0)::bigint,
+                    count(*), count(*) FILTER (WHERE currency <> 'IDR')
+             FROM transactions
+             WHERE user_id = $1 AND provider = $2
+               AND occurred_at >= ($3::date)::timestamp AT TIME ZONE 'Asia/Jakarta'
+               AND occurred_at < ($4::date)::timestamp AT TIME ZONE 'Asia/Jakarta'",
+        )
+        .bind(user_id)
+        .bind(provider)
+        .bind(from)
+        .bind(statement_date)
+        .fetch_one(&state.pool)
+        .await?;
+        bills.push(CardBill { provider: provider.into(), from, statement_date, total, count, foreign_count });
+    }
+    Ok(Json(bills))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn billing_period_wraps_month_and_year() {
+        let d = |s: &str| s.parse::<NaiveDate>().unwrap();
+        assert_eq!(billing_period(d("2026-11-22"), 25), Some((d("2026-10-25"), d("2026-11-25"))));
+        assert_eq!(billing_period(d("2026-11-25"), 25), Some((d("2026-11-25"), d("2026-12-25"))));
+        assert_eq!(billing_period(d("2027-01-03"), 25), Some((d("2026-12-25"), d("2027-01-25"))));
+    }
 }
 
 // ============================ sync ============================

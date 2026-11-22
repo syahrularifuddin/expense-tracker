@@ -7,9 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  --font-sans: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -36,100 +37,104 @@
   --color-track: var(--track);
   --shadow-card: var(--shadow-card);
   --shadow-pop: var(--shadow-pop);
-  /* Kontrol berbentuk pill (rounded-full); kartu & dialog 28px. */
+  /* Gading: pill controls (rounded-full), fields 16px, cards & dialogs 24px. */
   --radius-sm: 0.5rem;
   --radius-md: 0.625rem;
   --radius-lg: 0.75rem;
-  --radius-xl: 1.75rem;
+  --radius-xl: 1.5rem;
   --radius-2xl: 1.25rem;
   --radius-3xl: 2rem;
   --radius-4xl: 2rem;
 }
 
-/* Netral lembut + satu aksen oranye. Aksi utama gelap/netral, oranye untuk sorotan. */
+/* Gading design system (halosyahrul.com/docs/colors): warm cream base, amber brand,
+   teal for income/success, lilac accent, rose for errors. Primary actions are the dark
+   base-content pill; amber is the highlight. */
 :root {
-  --background: #f3f3f5;
-  --foreground: #1d1d1f;
+  --background: #faf6ef;
+  --foreground: #2a2420;
   --card: #ffffff;
-  --card-foreground: #1d1d1f;
+  --card-foreground: #2a2420;
   --popover: #ffffff;
-  --popover-foreground: #1d1d1f;
-  --primary: #1d1d1f;
-  --primary-foreground: #ffffff;
-  --secondary: #ededf0;
-  --secondary-foreground: #1d1d1f;
-  --muted: #ededf0;
-  --muted-foreground: #6e6e73;
-  --accent: #f3f3f5;
-  --accent-foreground: #1d1d1f;
-  --destructive: #c93c37;
-  --brand: #e8833a;
-  --success: #2f8f5b;
-  --track: #ececef;
-  --border: #e6e6ea;
-  --input: #dedee3;
-  --ring: #e8833a;
-  --chart-1: #e8833a;
-  --chart-2: #7c8597;
-  --chart-3: #2f8f5b;
-  --chart-4: #b7bcc7;
-  --chart-5: #c96a2a;
-  --radius: 0.75rem;
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.03), 0 6px 24px rgb(0 0 0 / 0.04);
-  --shadow-pop: 0 2px 6px rgb(0 0 0 / 0.06), 0 16px 48px rgb(0 0 0 / 0.12);
+  --popover-foreground: #2a2420;
+  --primary: #2a2420;
+  --primary-foreground: #faf6ef;
+  --secondary: #f3ebdd;
+  --secondary-foreground: #2a2420;
+  --muted: #f3ebdd;
+  --muted-foreground: #7a6f64;
+  --accent: #f3ebdd;
+  --accent-foreground: #2a2420;
+  --destructive: #d9636b;
+  --brand: #c9822e;
+  --success: #2f9e8f;
+  --track: #ece4d8;
+  --border: #ece4d8;
+  --input: #ece4d8;
+  --ring: #c9822e;
+  --chart-1: #c9822e;
+  --chart-2: #2f9e8f;
+  --chart-3: #7c6cd9;
+  --chart-4: #d8cebf;
+  --chart-5: #d9636b;
+  --radius: 1rem;
+  --shadow-card: 0 1px 2px rgba(60, 40, 20, 0.04), 0 8px 24px rgba(60, 40, 20, 0.06);
+  --shadow-pop: 0 16px 36px rgba(60, 40, 20, 0.13);
 
-  --loz-success-bg: #e6f3ec;
-  --loz-success-fg: #2a7a4c;
-  --loz-danger-bg: #fbe9e8;
-  --loz-danger-fg: #b2352f;
-  --loz-info-bg: #fdeee3;
-  --loz-info-fg: #b95a1c;
-  --loz-warning-bg: #fdeee3;
-  --loz-warning-fg: #b95a1c;
-  --loz-neutral-bg: #ededf0;
-  --loz-neutral-fg: #5b5b61;
+  /* Soft Gading tag backgrounds; light-mode text darkened toward base-content so
+     14px lozenge text passes WCAG AA (the raw teal/rose/amber on soft is ~2.8:1). */
+  --loz-success-bg: #ddf2ee;
+  --loz-success-fg: #2d7569;
+  --loz-danger-bg: #fbe3e3;
+  --loz-danger-fg: #9d4e51;
+  --loz-info-bg: #fbebd3;
+  --loz-info-fg: #906029;
+  --loz-warning-bg: #fbebd3;
+  --loz-warning-fg: #906029;
+  --loz-neutral-bg: #f3ebdd;
+  --loz-neutral-fg: #7a6f64;
 }
 
 .dark {
-  --background: #111113;
-  --foreground: #f2f2f4;
-  --card: #1c1c1f;
-  --card-foreground: #f2f2f4;
-  --popover: #232327;
-  --popover-foreground: #f2f2f4;
-  --primary: #f2f2f4;
-  --primary-foreground: #111113;
-  --secondary: #2a2a2e;
-  --secondary-foreground: #f2f2f4;
-  --muted: #2a2a2e;
-  --muted-foreground: #a1a1a8;
-  --accent: #26262a;
-  --accent-foreground: #f2f2f4;
-  --destructive: #f2736b;
-  --brand: #f0954f;
-  --success: #5cc285;
-  --track: #2c2c31;
-  --border: #2c2c31;
-  --input: #3a3a40;
-  --ring: #f0954f;
-  --chart-1: #f0954f;
-  --chart-2: #8f98aa;
-  --chart-3: #5cc285;
-  --chart-4: #5b606b;
-  --chart-5: #e07b3a;
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
-  --shadow-pop: 0 16px 48px rgb(0 0 0 / 0.5);
+  --background: #17130f;
+  --foreground: #f3ece2;
+  --card: #201b16;
+  --card-foreground: #f3ece2;
+  --popover: #201b16;
+  --popover-foreground: #f3ece2;
+  --primary: #f3ece2;
+  --primary-foreground: #17130f;
+  --secondary: #2f2821;
+  --secondary-foreground: #f3ece2;
+  --muted: #2f2821;
+  --muted-foreground: #a89c8e;
+  --accent: #2f2821;
+  --accent-foreground: #f3ece2;
+  --destructive: #e98a8f;
+  --brand: #e8a55a;
+  --success: #5cc7b8;
+  --track: #2f2821;
+  --border: #2f2821;
+  --input: #3d342b;
+  --ring: #e8a55a;
+  --chart-1: #e8a55a;
+  --chart-2: #5cc7b8;
+  --chart-3: #a89cf0;
+  --chart-4: #4a3f37;
+  --chart-5: #e98a8f;
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-pop: 0 16px 36px rgba(0, 0, 0, 0.4);
 
-  --loz-success-bg: #17301f;
-  --loz-success-fg: #7fd6a2;
-  --loz-danger-bg: #3a1d1b;
-  --loz-danger-fg: #f6a19b;
-  --loz-info-bg: #3a2416;
-  --loz-info-fg: #f6b07a;
-  --loz-warning-bg: #3a2416;
-  --loz-warning-fg: #f6b07a;
-  --loz-neutral-bg: #2a2a2e;
-  --loz-neutral-fg: #b4b4ba;
+  --loz-success-bg: #1c302c;
+  --loz-success-fg: #5cc7b8;
+  --loz-danger-bg: #3a2224;
+  --loz-danger-fg: #e98a8f;
+  --loz-info-bg: #3a2b1b;
+  --loz-info-fg: #e8a55a;
+  --loz-warning-bg: #3a2b1b;
+  --loz-warning-fg: #e8a55a;
+  --loz-neutral-bg: #2f2821;
+  --loz-neutral-fg: #a89c8e;
 }
 
 @layer base {
@@ -143,6 +148,10 @@
   }
   html {
     @apply font-sans;
+  }
+  /* Gading: titles in Space Grotesk. */
+  h1, h2, h3 {
+    @apply font-heading;
   }
 }
 

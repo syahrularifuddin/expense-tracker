@@ -1,0 +1,71 @@
+# Production stack on the VPS, next to halosyahrul.com. CI copies this file to the
+# deploy dir and runs `docker compose up -d` (see .github/workflows/deploy.yml).
+#
+# No public ports here: halosyahrul.com's Caddy owns 80/443 and reaches `expense-web`
+# and `expense-api` over the shared `edge` Docker network
+# (https://expense.halosyahrul.com, /api/v1/* to the API, the rest to the web app).
+#
+# Secrets come from .env in the deploy dir on the VPS (never in git); template and
+# generate commands in deploy/.env.example. Database: Neon (managed Postgres), not a container.
+services:
+  api:
+    image: ghcr.io/syahrularifuddin/expense-tracker/api:latest
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL in .env}
+      FRONTEND_ORIGIN: https://expense.halosyahrul.com
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+      TOKEN_ENCRYPTION_KEY: ${TOKEN_ENCRYPTION_KEY:?set TOKEN_ENCRYPTION_KEY in .env}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:?set GOOGLE_CLIENT_ID in .env}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:?set GOOGLE_CLIENT_SECRET in .env}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/api/v1/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      default:
+      edge:
+        aliases: [expense-api]
+    restart: unless-stopped
+    logging: &logging
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  web:
+    image: ghcr.io/syahrularifuddin/expense-tracker/web:latest
+    environment:
+      AUTH_SECRET: ${AUTH_SECRET:?set AUTH_SECRET in .env}
+      # Without AUTH_URL the standalone server builds OAuth callbacks on 0.0.0.0:3000.
+      AUTH_URL: https://expense.halosyahrul.com
+      AUTH_TRUST_HOST: "true"
+      AUTH_GOOGLE_ID: ${GOOGLE_CLIENT_ID}
+      AUTH_GOOGLE_SECRET: ${GOOGLE_CLIENT_SECRET}
+      BACKEND_URL: http://api:8080
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/login').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      default:
+      edge:
+        aliases: [expense-web]
+    restart: unless-stopped
+    logging: *logging
+
+networks:
+  edge:
+    external: true

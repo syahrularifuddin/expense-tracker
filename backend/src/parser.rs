@@ -42,6 +42,17 @@ pub struct RuleConfig {
     pub default_type: Option<TxType>,
     #[serde(default)]
     pub priority: i32,
+    /// false = aturan hanya templat (mis. `generic` untuk sender tambahan user).
+    #[serde(default = "enabled_default")]
+    pub enabled: bool,
+    /// Frasa subjek untuk query pencarian Gmail (`subject:"..."`). Kosong = hanya `from:`.
+    pub search_subject: Option<String>,
+    /// Nama kategori default untuk transaksi dari aturan ini; menang atas kata kunci merchant.
+    pub category: Option<String>,
+}
+
+fn enabled_default() -> bool {
+    true
 }
 
 #[derive(Debug)]
@@ -52,9 +63,15 @@ pub struct Rule {
     body: Regex,
     default_type: Option<TxType>,
     priority: i32,
+    category: Option<String>,
 }
 
 impl Rule {
+    /// Pengirim dan subjek cocok: email ini dianggap notifikasi transaksi.
+    fn claims(&self, sender_lower: &str, subject: &str) -> bool {
+        sender_lower.contains(&self.sender) && self.subject.as_ref().is_none_or(|s| s.is_match(subject))
+    }
+
     pub fn compile(c: RuleConfig) -> Result<Self, BoxError> {
         Ok(Self {
             subject: c.subject_pattern.as_deref().map(Regex::new).transpose()?,
@@ -63,6 +80,7 @@ impl Rule {
             sender: c.sender.to_lowercase(),
             default_type: c.default_type,
             priority: c.priority,
+            category: c.category,
         })
     }
 }
@@ -106,6 +124,16 @@ pub struct Parsed {
     pub tx_type: TxType,
     pub merchant: Option<String>,
     pub occurred_at: DateTime<Utc>,
+    /// Kode ISO 4217 dari group `currency`; default IDR ("Rp" juga IDR).
+    pub currency: String,
+    pub category: Option<String>,
+}
+
+/// Ada aturan yang pengirim + subjeknya cocok. Email lain (promo, OTP, info akun)
+/// dilewati sepenuhnya, tidak dicatat sebagai gagal parse.
+pub fn claims(rules: &[Rule], sender: &str, subject: &str) -> bool {
+    let sender = sender.to_lowercase();
+    rules.iter().any(|r| r.claims(&sender, subject))
 }
 
 /// Aturan pertama (urut priority) yang sender + subject-nya cocok dan
@@ -115,8 +143,7 @@ pub fn parse(rules: &[Rule], email: &Email) -> Option<Parsed> {
     let sender = email.sender.to_lowercase();
     rules
         .iter()
-        .filter(|r| sender.contains(&r.sender))
-        .filter(|r| r.subject.as_ref().is_none_or(|s| s.is_match(email.subject)))
+        .filter(|r| r.claims(&sender, email.subject))
         .find_map(|r| {
             r.body.captures_iter(&body).find_map(|c| {
                 let amount_minor = parse_amount(c.name("amount")?.as_str()).filter(|a| *a > 0)?;
@@ -137,6 +164,12 @@ pub fn parse(rules: &[Rule], email: &Email) -> Option<Parsed> {
                         .name("date")
                         .and_then(|d| parse_date(d.as_str()))
                         .unwrap_or(email.received_at),
+                    currency: c
+                        .name("currency")
+                        .map(|m| m.as_str().trim().to_uppercase())
+                        .filter(|c| c.len() == 3 && c.chars().all(|ch| ch.is_ascii_alphabetic()))
+                        .unwrap_or_else(|| "IDR".into()),
+                    category: r.category.clone(),
                 })
             })
         })
@@ -213,7 +246,7 @@ fn month_from_name(name: &str) -> Option<u32> {
         "mei" | "may" => 5,
         "jun" => 6,
         "jul" => 7,
-        "agu" | "ags" | "aug" => 8,
+        "agu" | "ags" | "agt" | "aug" => 8,
         "sep" => 9,
         "okt" | "oct" => 10,
         "nov" => 11,
@@ -235,6 +268,8 @@ mod tests {
         assert_eq!(parse_amount("500"), Some(50_000));
         assert_eq!(parse_amount("45.500."), Some(4_550_000)); // titik akhir kalimat
         assert_eq!(parse_amount("7,5"), Some(750));
+        assert_eq!(parse_amount("10,000,000.00"), Some(1_000_000_000));
+        assert_eq!(parse_amount("1.38"), Some(138));
         assert_eq!(parse_amount(""), None);
         assert_eq!(parse_amount(".,"), None);
     }
@@ -252,6 +287,11 @@ mod tests {
         );
         assert_eq!(parse_date("17 Mei 2026\nJam\n23:59:59 WIB"), Some(utc("2026-05-17T16:59:59Z")));
         assert_eq!(parse_date("3 Okt 2026"), Some(utc("2026-10-02T17:00:00Z")));
+        // Format email asli: BCA ("Agt"), Jenius (huruf besar + WIB), Krom ("12.35", "(WIB)").
+        assert_eq!(parse_date("19 Agt 2026 08:10:00"), Some(utc("2026-08-19T01:10:00Z")));
+        assert_eq!(parse_date("21 NOV 2026 15:25:30 WIB"), Some(utc("2026-11-21T08:25:30Z")));
+        assert_eq!(parse_date("21 November 2026, 12.35"), Some(utc("2026-11-21T05:35:00Z")));
+        assert_eq!(parse_date("18-11-2026 11:16 (WIB)"), Some(utc("2026-11-18T04:16:00Z")));
         assert_eq!(parse_date("31/02/2026 10:00"), None);
         assert_eq!(parse_date("tidak ada tanggal"), None);
     }
