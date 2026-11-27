@@ -1,5 +1,12 @@
 # Expense Tracker
 
+[![Continuous Integration](https://github.com/syahrularifuddin/expense-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/syahrularifuddin/expense-tracker/actions/workflows/ci.yml)
+[![Deploy](https://github.com/syahrularifuddin/expense-tracker/actions/workflows/deploy.yml/badge.svg)](https://github.com/syahrularifuddin/expense-tracker/actions/workflows/deploy.yml)
+![Rust](https://img.shields.io/badge/backend-Rust-000000?logo=rust&logoColor=white)
+![Next.js](https://img.shields.io/badge/frontend-Next.js%2016-000000?logo=nextdotjs&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/database-PostgreSQL%2016-4169E1?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-compose-2496ED?logo=docker&logoColor=white)
+
 Records transactions automatically from bank and e-wallet notification emails in Gmail.
 Rust backend (axum + sqlx + PostgreSQL), Next.js 16 frontend (Auth.js, TanStack Query, shadcn/ui).
 
