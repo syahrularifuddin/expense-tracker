@@ -50,7 +50,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="mx-auto min-h-dvh max-w-[1240px] px-3 pt-3 pb-10 sm:px-6 sm:pt-5">
       <header className="flex h-16 items-center gap-2 rounded-full bg-card pr-2 pl-4 shadow-card sm:pl-6">
         <Link href="/" className="flex shrink-0 items-center gap-2.5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <span className="flex size-8 items-center justify-center rounded-full bg-brand text-white">
+          <span className="flex size-8 items-center justify-center rounded-full bg-brand text-brand-foreground">
             <Wallet className="size-4" aria-hidden />
           </span>
           <span className="text-lg font-semibold tracking-tight">

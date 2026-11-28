@@ -12,7 +12,7 @@ export default function LoginPage() {
   return (
     <main className="flex min-h-dvh items-center justify-center bg-background p-4">
       <div className="w-full max-w-sm rounded-xl bg-card p-8 text-center shadow-card sm:p-10">
-        <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-brand text-white">
+        <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-brand text-brand-foreground">
           <Wallet className="size-5" aria-hidden />
         </span>
         <h1 className="mt-4 text-2xl font-semibold tracking-tight">Expense Tracker</h1>
