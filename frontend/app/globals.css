@@ -33,11 +33,13 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-soft: var(--brand-soft);
   --color-success: var(--success);
   --color-track: var(--track);
   --shadow-card: var(--shadow-card);
   --shadow-pop: var(--shadow-pop);
-  /* Gading: pill controls (rounded-full), fields 16px, cards & dialogs 24px. */
+  /* Halo: pill controls (rounded-full), fields 16px, cards & dialogs 24px. */
   --radius-sm: 0.5rem;
   --radius-md: 0.625rem;
   --radius-lg: 0.75rem;
@@ -47,94 +49,97 @@
   --radius-4xl: 2rem;
 }
 
-/* Gading design system (halosyahrul.com/docs/colors): warm cream base, amber brand,
-   teal for income/success, lilac accent, rose for errors. Primary actions are the dark
-   base-content pill; amber is the highlight. */
+/* Halo design system (halosyahrul.com/docs/colors): sage base-100 canvas, deep green
+   primary, burnt-orange secondary, blue accent, rose error. Surfaces are white (light)
+   or base-200 (dark); green is the highlight, orange/brown means money going out. */
 :root {
-  --background: #faf6ef;
-  --foreground: #2a2420;
+  --background: #f4f7f0;
+  --foreground: #15241c;
   --card: #ffffff;
-  --card-foreground: #2a2420;
+  --card-foreground: #15241c;
   --popover: #ffffff;
-  --popover-foreground: #2a2420;
-  --primary: #2a2420;
-  --primary-foreground: #faf6ef;
-  --secondary: #f3ebdd;
-  --secondary-foreground: #2a2420;
-  --muted: #f3ebdd;
-  --muted-foreground: #7a6f64;
-  --accent: #f3ebdd;
-  --accent-foreground: #2a2420;
-  --destructive: #d9636b;
-  --brand: #c9822e;
-  --success: #2f9e8f;
-  --track: #ece4d8;
-  --border: #ece4d8;
-  --input: #ece4d8;
-  --ring: #c9822e;
-  --chart-1: #c9822e;
-  --chart-2: #2f9e8f;
-  --chart-3: #7c6cd9;
-  --chart-4: #d8cebf;
-  --chart-5: #d9636b;
+  --popover-foreground: #15241c;
+  --primary: #17794d;
+  --primary-foreground: #ffffff;
+  --secondary: #e8eee2;
+  --secondary-foreground: #15241c;
+  --muted: #e8eee2;
+  --muted-foreground: #57665d;
+  --accent: #e8eee2;
+  --accent-foreground: #15241c;
+  --destructive: #b53844;
+  --brand: #17794d;
+  --brand-soft: #dcf0e3;
+  --brand-foreground: #ffffff;
+  --success: #17794d;
+  --track: #dde5d6;
+  --border: #dde5d6;
+  --input: #dde5d6;
+  --ring: #17794d;
+  --chart-1: #a94511;
+  --chart-2: #17794d;
+  --chart-3: #2a63bd;
+  --chart-4: #dde5d6;
+  --chart-5: #b53844;
   --radius: 1rem;
-  --shadow-card: 0 1px 2px rgba(60, 40, 20, 0.04), 0 8px 24px rgba(60, 40, 20, 0.06);
-  --shadow-pop: 0 16px 36px rgba(60, 40, 20, 0.13);
+  --shadow-card: 0 1px 2px rgba(21, 36, 28, 0.04), 0 8px 24px rgba(21, 36, 28, 0.07);
+  --shadow-pop: 0 16px 36px rgba(21, 36, 28, 0.14);
 
-  /* Soft Gading tag backgrounds; light-mode text darkened toward base-content so
-     14px lozenge text passes WCAG AA (the raw teal/rose/amber on soft is ~2.8:1). */
-  --loz-success-bg: #ddf2ee;
-  --loz-success-fg: #2d7569;
+  /* Soft tag pairs straight from the docs; every fg/bg pair below is >= 4.5:1. */
+  --loz-success-bg: #dcf0e3;
+  --loz-success-fg: #17794d;
   --loz-danger-bg: #fbe3e3;
-  --loz-danger-fg: #9d4e51;
-  --loz-info-bg: #fbebd3;
-  --loz-info-fg: #906029;
-  --loz-warning-bg: #fbebd3;
-  --loz-warning-fg: #906029;
-  --loz-neutral-bg: #f3ebdd;
-  --loz-neutral-fg: #7a6f64;
+  --loz-danger-fg: #b53844;
+  --loz-info-bg: #e1eafa;
+  --loz-info-fg: #2a63bd;
+  --loz-warning-bg: #fbe6da;
+  --loz-warning-fg: #a94511;
+  --loz-neutral-bg: #e8eee2;
+  --loz-neutral-fg: #57665d;
 }
 
 .dark {
-  --background: #17130f;
-  --foreground: #f3ece2;
-  --card: #201b16;
-  --card-foreground: #f3ece2;
-  --popover: #201b16;
-  --popover-foreground: #f3ece2;
-  --primary: #f3ece2;
-  --primary-foreground: #17130f;
-  --secondary: #2f2821;
-  --secondary-foreground: #f3ece2;
-  --muted: #2f2821;
-  --muted-foreground: #a89c8e;
-  --accent: #2f2821;
-  --accent-foreground: #f3ece2;
+  --background: #0f1512;
+  --foreground: #e9f0ea;
+  --card: #161e19;
+  --card-foreground: #e9f0ea;
+  --popover: #161e19;
+  --popover-foreground: #e9f0ea;
+  --primary: #5fd39b;
+  --primary-foreground: #0f1512;
+  --secondary: #232d27;
+  --secondary-foreground: #e9f0ea;
+  --muted: #232d27;
+  --muted-foreground: #9aa89f;
+  --accent: #232d27;
+  --accent-foreground: #e9f0ea;
   --destructive: #e98a8f;
-  --brand: #e8a55a;
-  --success: #5cc7b8;
-  --track: #2f2821;
-  --border: #2f2821;
-  --input: #3d342b;
-  --ring: #e8a55a;
-  --chart-1: #e8a55a;
-  --chart-2: #5cc7b8;
-  --chart-3: #a89cf0;
-  --chart-4: #4a3f37;
+  --brand: #5fd39b;
+  --brand-soft: #173326;
+  --brand-foreground: #0f1512;
+  --success: #5fd39b;
+  --track: #232d27;
+  --border: #232d27;
+  --input: #2d3a32;
+  --ring: #5fd39b;
+  --chart-1: #f29a6b;
+  --chart-2: #5fd39b;
+  --chart-3: #8fb6f2;
+  --chart-4: #2d3a32;
   --chart-5: #e98a8f;
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.25);
   --shadow-pop: 0 16px 36px rgba(0, 0, 0, 0.4);
 
-  --loz-success-bg: #1c302c;
-  --loz-success-fg: #5cc7b8;
+  --loz-success-bg: #173326;
+  --loz-success-fg: #5fd39b;
   --loz-danger-bg: #3a2224;
   --loz-danger-fg: #e98a8f;
-  --loz-info-bg: #3a2b1b;
-  --loz-info-fg: #e8a55a;
-  --loz-warning-bg: #3a2b1b;
-  --loz-warning-fg: #e8a55a;
-  --loz-neutral-bg: #2f2821;
-  --loz-neutral-fg: #a89c8e;
+  --loz-info-bg: #1b2a44;
+  --loz-info-fg: #8fb6f2;
+  --loz-warning-bg: #3a2416;
+  --loz-warning-fg: #f29a6b;
+  --loz-neutral-bg: #232d27;
+  --loz-neutral-fg: #9aa89f;
 }
 
 @layer base {
@@ -149,7 +154,7 @@
   html {
     @apply font-sans;
   }
-  /* Gading: titles in Space Grotesk. */
+  /* Halo: titles in Space Grotesk. */
   h1, h2, h3 {
     @apply font-heading;
   }

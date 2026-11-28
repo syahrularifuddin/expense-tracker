@@ -91,7 +91,7 @@ export function MethodFilter({ value, onChange }: { value: string; onChange: (pr
       className={cn(
         "inline-flex h-9 items-center rounded-full border px-3 font-medium transition-colors",
         value === id
-          ? "border-brand bg-[var(--loz-info-bg)] text-foreground"
+          ? "border-brand bg-brand-soft text-foreground"
           : "border-input text-muted-foreground hover:bg-muted hover:text-foreground",
       )}
     >
